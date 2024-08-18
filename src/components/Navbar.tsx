@@ -1,8 +1,13 @@
 import React from "react";
-import { Text } from "@chakra-ui/react";
-
+import { HStack, Text, Image } from "@chakra-ui/react";
+import logo from "../assets/logo.png";
 const Navbar = () => {
-  return <Text>Project Management Systen</Text>;
+  return (
+    <HStack justifyContent="space-between" padding="10px">
+      <Image src={logo} boxSize="60px" objectFit="cover" />
+      <Text>Project Management System</Text>
+    </HStack>
+  );
 };
 
 export default Navbar;

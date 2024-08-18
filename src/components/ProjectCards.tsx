@@ -9,7 +9,7 @@ interface Props {
 const ProjectCards = ({ project }: Props) => {
   return (
     <Card borderRadius={10} overflow="hidden">
-      <CardBody>
+      <CardBody padding="40px">
         <Heading fontSize="2xl">{project.title}</Heading>
       </CardBody>
     </Card>

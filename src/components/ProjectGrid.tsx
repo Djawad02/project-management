@@ -11,11 +11,11 @@ const ProjectGrid = () => {
       <SimpleGrid
         columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
         padding="10px"
-        spacing={4}
+        spacing={3}
       >
         {projectList.map((project) => (
-          <ProjectCardContainer>
-            <ProjectCards key={project.id} project={project} />
+          <ProjectCardContainer key={project.id}>
+            <ProjectCards project={project} />
           </ProjectCardContainer>
         ))}
       </SimpleGrid>

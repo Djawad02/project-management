@@ -9,7 +9,7 @@ const ProjectCardContainer = ({ children }: Props) => {
     <Box
       borderRadius={10}
       overflow="hidden"
-      padding="40px"
+      padding="20px"
       bg="blue.900" // Dark background color
       color="whiteAlpha.900" // White text color
       boxShadow="lg" // Adds a shadow for depth

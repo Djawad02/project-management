@@ -15,7 +15,6 @@ const useProjects = () =>{
         // Simulate fetching data
         setProjectLists(projects) }, []);
     
-    
     return {projectList,error}
 }
 

@@ -8,8 +8,12 @@ interface Props {
 
 const ProjectCards = ({ project }: Props) => {
   return (
-    <Card borderRadius={10} overflow="hidden">
-      <CardBody padding="40px">
+    <Card
+      bg="transparent" // Make the card background transparent
+      boxShadow="none"
+      color="whiteAlpha.900"
+    >
+      <CardBody>
         <Heading fontSize="2xl">{project.title}</Heading>
       </CardBody>
     </Card>

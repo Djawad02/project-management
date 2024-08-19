@@ -13,7 +13,11 @@ const ProjectCardContainer = ({ children }: Props) => {
       bg="blue.900" // Dark background color
       color="whiteAlpha.900" // White text color
       boxShadow="lg" // Adds a shadow for depth
-      _hover={{ bg: "blue.700" }} // Slightly lighter on hover
+      _hover={{
+        bg: "blue.700",
+        transform: "scale(1.06)",
+        transition: "transform .15s ease-in",
+      }} // Slightly lighter on hover
     >
       {children}
     </Box>

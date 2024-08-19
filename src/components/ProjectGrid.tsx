@@ -12,6 +12,7 @@ const ProjectGrid = () => {
         columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
         padding="10px"
         spacing={3}
+        marginTop="40px"
       >
         {projectList.map((project) => (
           <ProjectCardContainer key={project.id}>

@@ -15,15 +15,16 @@ function App() {
         lg: "200px 1fr",
       }}
     >
-      <GridItem area="nav" bg="blackAlpha.900" color="whiteAlpha.900">
+      <GridItem area="nav" bg="blue.900" color="whiteAlpha.900">
         <Navbar />
       </GridItem>
       <Show above="lg">
         <GridItem
           area="aside"
-          bg="gray.900"
+          bg="blue.700"
           color="whiteAlpha.900"
           paddingX={5}
+          // marginTop="2px"
         >
           <Sidebar />
         </GridItem>

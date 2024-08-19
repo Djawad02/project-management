@@ -1,5 +1,5 @@
 import React from "react";
-import { Project } from "../hooks/useProjects";
+import { Project } from "../interfaces/Project";
 import { Card, CardBody, Heading } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 

@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import projects from "../data/projects";
-
-export interface Project {
-    id: number;
-    title: string;
-    description: string;
-    status: string;
-  }
+import { Project } from "../interfaces/Project";
 
 const useProjects = () =>{
     const [projectList, setProjectLists] = useState<Project[]>([])

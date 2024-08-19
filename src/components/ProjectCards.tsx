@@ -1,6 +1,7 @@
 import React from "react";
 import { Project } from "../hooks/useProjects";
 import { Card, CardBody, Heading } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 interface Props {
   project: Project;
@@ -14,7 +15,9 @@ const ProjectCards = ({ project }: Props) => {
       color="whiteAlpha.900"
     >
       <CardBody>
-        <Heading fontSize="2xl">{project.title}</Heading>
+        <Heading fontSize="2xl">
+          <Link to={"/projects/" + project.title}> {project.title}</Link>
+        </Heading>
       </CardBody>
     </Card>
   );

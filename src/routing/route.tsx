@@ -3,6 +3,7 @@ import ProjectDetailPage from "../pages/ProjectDetailPage";
 import Homepage from "../pages/Homepage";
 import Layout from "../pages/Layout";
 import ErrorPage from "../pages/ErrorPage";
+import UserManagementPage from "../pages/UserManagementPage";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Homepage /> },
       { path: "projects/:title", element: <ProjectDetailPage /> },
+      {
+        path: "projects/:title/user-management",
+        element: <UserManagementPage />,
+      },
     ],
   },
 ]);

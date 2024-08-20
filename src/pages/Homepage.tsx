@@ -14,12 +14,13 @@ const Homepage = () => {
         base: "1fr",
         lg: "200px 1fr",
       }}
+      minHeight="100vh"
     >
       {/* <GridItem area="nav" bg="blue.900" color="whiteAlpha.900">
         <Navbar />
       </GridItem> */}
       <Show above="lg">
-        <GridItem>
+        <GridItem height="100%">
           <Sidebar />
         </GridItem>
       </Show>

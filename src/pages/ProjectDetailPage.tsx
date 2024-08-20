@@ -25,9 +25,10 @@ const ProjectDetailPage = () => {
         base: "1fr",
         lg: "200px 1fr",
       }}
+      minHeight="100vh"
     >
       <Show above="lg">
-        <GridItem>
+        <GridItem height="100%">
           <Sidebar />
         </GridItem>
       </Show>

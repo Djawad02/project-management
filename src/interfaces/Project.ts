@@ -6,4 +6,5 @@ export interface Project {
     description: string;
     status: string;
     members:Member[];
+    source:string;
 }

@@ -37,6 +37,7 @@ const ProjectDetailPage = () => {
           <Heading>{project.title}</Heading>
           <Text>{project.description}</Text>
           <Text>Status: {project.status}</Text>
+          <Text>Source: {project.source}</Text>
         </Box>
       </GridItem>
     </Grid>

@@ -1,6 +1,6 @@
 const sidebarItems = [
     "Home",
-    "User Management",
+    "View Members",
     "Sprint Details",
     "Project Dashboard",
   ];

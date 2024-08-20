@@ -19,17 +19,18 @@ const Sidebar = () => {
     >
       <Box height="100%">
         <SidebarItem path="/" label="Home" />
+
         {isProjectPage && (
           <>
             <SidebarItem
-              path={`${location.pathname}/user-management`}
-              label="User Management"
+              path={`${location.pathname}/team`}
+              label="View Members"
             />
             {/* Add more project-specific sidebar items here if needed */}
+            <SidebarItem path="/Sprint-Details" label="Sprint Details" />
+            <SidebarItem path="/Dashboard" label="Project Dashboard" />
           </>
         )}
-        <SidebarItem path="/Sprint-Details" label="Sprint Details" />
-        <SidebarItem path="/Dashboard" label="Project Dashboard" />
       </Box>
     </VStack>
   );

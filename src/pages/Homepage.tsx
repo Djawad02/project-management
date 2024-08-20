@@ -5,25 +5,7 @@ import Sidebar from "../components/Sidebar";
 
 const Homepage = () => {
   return (
-    <Grid
-      templateAreas={{
-        base: `"main"`,
-        lg: `"aside main"`,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "200px 1fr",
-      }}
-      minHeight="100vh"
-    >
-      {/* <GridItem area="nav" bg="blue.900" color="whiteAlpha.900">
-        <Navbar />
-      </GridItem> */}
-      <Show above="lg">
-        <GridItem height="100%">
-          <Sidebar />
-        </GridItem>
-      </Show>
+    <Grid>
       <GridItem area="main">
         <ProjectGrid />
       </GridItem>

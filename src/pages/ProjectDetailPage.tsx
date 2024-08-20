@@ -16,31 +16,12 @@ const ProjectDetailPage = () => {
   }
   if (error) throw error;
   return (
-    <Grid
-      templateAreas={{
-        base: `"main"`,
-        lg: `"aside main"`,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "200px 1fr",
-      }}
-      minHeight="100vh"
-    >
-      <Show above="lg">
-        <GridItem height="100%">
-          <Sidebar />
-        </GridItem>
-      </Show>
-      <GridItem area="main">
-        <Box padding={5}>
-          <Heading>{project.title}</Heading>
-          <Text>{project.description}</Text>
-          <Text>Status: {project.status}</Text>
-          <Text>Source: {project.source}</Text>
-        </Box>
-      </GridItem>
-    </Grid>
+    <Box padding={5}>
+      <Heading>{project.title}</Heading>
+      <Text>{project.description}</Text>
+      <Text>Status: {project.status}</Text>
+      <Text>Source: {project.source}</Text>
+    </Box>
   );
 };
 

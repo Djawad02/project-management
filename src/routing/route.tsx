@@ -4,6 +4,8 @@ import Homepage from "../pages/Homepage";
 import Layout from "../pages/Layout";
 import ErrorPage from "../pages/ErrorPage";
 import UserManagementPage from "../pages/UserManagementPage";
+import SprintDetailsPage from "../pages/SprintDetailsPage";
+import ProjectDashboardPage from "../pages/ProjectDashboardPage";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,14 @@ const router = createBrowserRouter([
       {
         path: "projects/:title/team",
         element: <UserManagementPage />,
+      },
+      {
+        path: "projects/:title/sprint-details",
+        element: <SprintDetailsPage />,
+      },
+      {
+        path: "projects/:title/dashboard",
+        element: <ProjectDashboardPage />,
       },
     ],
   },

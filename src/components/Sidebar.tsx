@@ -6,6 +6,12 @@ import { useLocation } from "react-router-dom";
 const Sidebar = () => {
   const location = useLocation();
   const isProjectPage = location.pathname.startsWith("/projects/");
+
+  // Extract the base project path (e.g., "/projects/:title")
+  const projectBasePath = isProjectPage
+    ? location.pathname.split("/").slice(0, 3).join("/")
+    : "";
+
   return (
     <VStack
       justifyContent="left"
@@ -15,7 +21,7 @@ const Sidebar = () => {
       paddingX={2}
       spacing={4}
       height="100vh"
-      overflowY="auto" // Enables vertical scrolling
+      overflowY="auto"
     >
       <Box height="100%">
         <SidebarItem path="/" label="Home" />
@@ -23,12 +29,17 @@ const Sidebar = () => {
         {isProjectPage && (
           <>
             <SidebarItem
-              path={`${location.pathname}/team`}
+              path={`${projectBasePath}/team`}
               label="View Members"
             />
-            {/* Add more project-specific sidebar items here if needed */}
-            <SidebarItem path="/Sprint-Details" label="Sprint Details" />
-            <SidebarItem path="/Dashboard" label="Project Dashboard" />
+            <SidebarItem
+              path={`${projectBasePath}/sprint-details`}
+              label="Sprint Details"
+            />
+            <SidebarItem
+              path={`${projectBasePath}/dashboard`}
+              label="Project Dashboard"
+            />
           </>
         )}
       </Box>

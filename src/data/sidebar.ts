@@ -1,5 +1,5 @@
 const sidebarItems = [
-    "View Projects",
+    "Home",
     "User Management",
     "Sprint Details",
     "Project Dashboard",

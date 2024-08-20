@@ -1,7 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading, Show, Text } from "@chakra-ui/react";
+import Sidebar from "../components/Sidebar";
 
 const ProjectDetailPage = () => {
   const { title } = useParams();
@@ -15,11 +16,29 @@ const ProjectDetailPage = () => {
   }
   if (error) throw error;
   return (
-    <>
-      <Heading>{project.title}</Heading>
-      <Text>{project.description}</Text>
-      <Text>Status: {project.status}</Text>
-    </>
+    <Grid
+      templateAreas={{
+        base: `"main"`,
+        lg: `"aside main"`,
+      }}
+      templateColumns={{
+        base: "1fr",
+        lg: "200px 1fr",
+      }}
+    >
+      <Show above="lg">
+        <GridItem>
+          <Sidebar />
+        </GridItem>
+      </Show>
+      <GridItem area="main">
+        <Box padding={5}>
+          <Heading>{project.title}</Heading>
+          <Text>{project.description}</Text>
+          <Text>Status: {project.status}</Text>
+        </Box>
+      </GridItem>
+    </Grid>
   );
 };
 

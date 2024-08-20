@@ -1,13 +1,14 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
-import { Box } from "@chakra-ui/react";
+import { Box, GridItem, Show } from "@chakra-ui/react";
+import Sidebar from "../components/Sidebar";
 
 const Layout = () => {
   return (
     <>
       <Navbar />
-      <Box padding={5}>
+      <Box>
         <Outlet />
       </Box>
     </>

@@ -19,13 +19,7 @@ const Homepage = () => {
         <Navbar />
       </GridItem> */}
       <Show above="lg">
-        <GridItem
-          area="aside"
-          bg="blue.700"
-          color="whiteAlpha.900"
-          paddingX={5}
-          // marginTop="2px"
-        >
+        <GridItem>
           <Sidebar />
         </GridItem>
       </Show>

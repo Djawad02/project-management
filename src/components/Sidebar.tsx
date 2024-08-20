@@ -29,6 +29,10 @@ const Sidebar = () => {
         {isProjectPage && (
           <>
             <SidebarItem
+              path={`${projectBasePath}/details`}
+              label="Project Details"
+            />
+            <SidebarItem
               path={`${projectBasePath}/team`}
               label="View Members"
             />

@@ -14,18 +14,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Homepage /> },
-      { path: "projects/:title", element: <ProjectDetailPage /> },
       {
-        path: "projects/:title/team",
-        element: <UserManagementPage />,
-      },
-      {
-        path: "projects/:title/sprint-details",
-        element: <SprintDetailsPage />,
-      },
-      {
-        path: "projects/:title/dashboard",
-        element: <ProjectDashboardPage />,
+        path: "projects/:title",
+        children: [
+          { index: true, element: <ProjectDetailPage /> },
+          { path: "details", element: <ProjectDetailPage /> },
+          { path: "team", element: <UserManagementPage /> },
+          { path: "sprint-details", element: <SprintDetailsPage /> },
+          { path: "dashboard", element: <ProjectDashboardPage /> },
+        ],
       },
     ],
   },

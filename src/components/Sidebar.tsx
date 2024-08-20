@@ -19,8 +19,8 @@ const Sidebar = () => {
       bg="blue.700"
       color="whiteAlpha.900"
       paddingX={2}
-      spacing={4}
-      height="100vh"
+      spacing={2}
+      height="100%"
       overflowY="auto"
     >
       <Box height="100%">

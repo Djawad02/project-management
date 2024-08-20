@@ -143,28 +143,36 @@ const projects = [
     ],
     source: 'LinkedIn'
   },
-  // {
-  //   id: 13,
-  //   title: 'Data Visualization Dashboard',
-  //   description: 'A dashboard for visualizing key business metrics using charts and graphs.',
-  //   status: 'In Progress',
-  //   members: [
-  //     { name: 'Basil', role: 'Team Lead' },
-  //     { name: 'Marrium', role: 'Developer' },
-  //   ],
-  // },
-  // {
-  //   id: 14,
-  //   title: 'Blockchain-based Voting System',
-  //   description: 'A secure voting system based on blockchain technology.',
-  //   status: 'Pending'
-  // },
-  // {
-  //   id: 15,
-  //   title: 'Healthcare Management System',
-  //   description: 'A system for managing patient records, appointments, and billing.',
-  //   status: 'Completed'
-  // }
+  {
+    id: 13,
+    title: 'Data Visualization Dashboard',
+    description: 'A dashboard for visualizing key business metrics using charts and graphs.',
+    status: 'In Progress',
+    members: [
+      { name: 'Basil', role: 'Team Lead' },
+      { name: 'Marrium', role: 'Developer' },
+    ],
+  },
+  {
+    id: 14,
+    title: 'Blockchain-based Voting System',
+    description: 'A secure voting system based on blockchain technology.',
+    status: 'Pending',
+    members: [
+      { name: 'Rom', role: 'Team Lead' },
+      { name: 'Pop', role: 'Developer' },
+    ],
+  },
+  {
+    id: 15,
+    title: 'Healthcare Management System',
+    description: 'A system for managing patient records, appointments, and billing.',
+    status: 'Completed',
+    members: [
+      { name: 'Basil', role: 'Team Lead' },
+      { name: 'Marrium', role: 'Developer' },
+    ],
+  }
 ];
 
 export default projects;

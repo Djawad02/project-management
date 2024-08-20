@@ -10,7 +10,7 @@ const Layout = () => {
     <>
       <Navbar />
       <Grid
-        templateColumns={{ base: "1fr", lg: "250px 1fr" }}
+        templateColumns={{ base: "1fr", lg: "210px 1fr" }}
         minHeight="100vh"
       >
         <Show above="lg">
@@ -20,7 +20,7 @@ const Layout = () => {
         </Show>
 
         <GridItem>
-          <Box p={4}>
+          <Box p={2}>
             <Outlet />
           </Box>
         </GridItem>

@@ -4,12 +4,7 @@ const projects = [
     title: 'Inventory Management System',
     description: 'A system to manage inventory levels, orders, and suppliers.',
     status: 'In Progress',
-    members: [
-      { name: 'Ammar', role: 'Team Lead' },
-      { name: 'Dania', role: 'Developer' },
-      { name: 'Aslam', role: 'Developer' },
-      { name: 'Muhammad', role: 'Backend Developer' },
-    ],
+    members: [1,2,3,4,6,9],
     source: 'LinkedIn'
   },
   {
@@ -17,11 +12,7 @@ const projects = [
     title: 'Customer Relationship Management (CRM) Tool',
     description: 'A CRM tool for managing interactions with potential and current customers.',
     status: 'Completed',
-    members: [
-      { name: 'Ammar', role: 'Team Lead' },
-      { name: 'Dania', role: 'Developer' },
-      { name: 'Muhammad', role: 'Backend Developer' },
-    ],
+    members: [4,6,7,9,2],
     source: 'Upwork'
   },
   {
@@ -29,11 +20,7 @@ const projects = [
     title: 'E-commerce Platform',
     description: 'An online platform for selling products with payment gateway integration.',
     status: 'In Progress',
-    members: [
-      { name: 'Ammar', role: 'Team Lead' },
-      { name: 'Dania', role: 'Developer' },
-      { name: 'Aslam', role: 'Developer' },
-    ],
+    members: [3,5,6,9,12,15],
     source: 'Fiverr'
   },
   {
@@ -41,11 +28,7 @@ const projects = [
     title: 'HR Management System',
     description: 'A system to manage employee data, payroll, and attendance.',
     status: 'Pending',
-    members: [
-      { name: 'Ammar', role: 'Team Lead' },
-      { name: 'Aslam', role: 'Developer' },
-      { name: 'Muhammad', role: 'Backend Developer' },
-    ],
+    members: [2,3,4,7,16],
     source: 'LinkedIn'
   },
   {
@@ -53,11 +36,7 @@ const projects = [
     title: 'Social Media Analytics Tool',
     description: 'A tool to analyze social media performance and sentiment.',
     status: 'Completed',
-    members: [
-      { name: 'Marrium', role: 'Team Lead' },
-      { name: 'Dania', role: 'Developer' },
-      { name: 'Muhammad', role: 'Backend Developer' },
-    ],
+    members: [16,11,12,13],
     source: 'Fiverr'
   },
   {
@@ -65,11 +44,7 @@ const projects = [
     title: 'Project Management Software',
     description: 'A web-based tool to manage and track project progress and team collaboration.',
     status: 'In Progress',
-    members: [
-      { name: 'Dane', role: 'Team Lead' },
-      { name: 'David', role: 'Business Analyst' },
-      { name: 'Eve', role: 'Developer' },
-    ],
+    members: [9,8,7,4,3],
     source: 'Upwork'
   },
   {
@@ -77,11 +52,7 @@ const projects = [
     title: 'Cloud Storage Solution',
     description: 'A secure cloud storage platform for storing and sharing files.',
     status: 'In Progress',
-    members: [
-      { name: 'Ayesha', role: 'Team Lead' },
-      { name: 'Eve', role: 'Developer' },
-      { name: 'Sam', role: 'Developer' },
-    ],
+    members: [1,3,6,8],
     source: 'LinkedIn'
   },
   {
@@ -89,11 +60,7 @@ const projects = [
     title: 'Mobile Banking App',
     description: 'A mobile application for banking services, including transfers and bill payments.',
     status: 'Completed',
-    members: [
-      { name: 'Alice', role: 'Team Lead' },
-      { name: 'Bob', role: 'Developer' },
-      { name: 'Charlie', role: 'QA Engineer' },
-    ],
+    members: [16,15,12,11 ],
     source: 'Fiverr'
   },
   {
@@ -101,12 +68,7 @@ const projects = [
     title: 'Cybersecurity Awareness Training',
     description: 'A training platform to educate employees on cybersecurity best practices.',
     status: 'In Progress',
-    members: [
-      { name: 'Aalie', role: 'Team Lead' },
-      { name: 'Alice', role: 'Project Manager' },
-      { name: 'Bob', role: 'Developer' },
-      { name: 'Charlie', role: 'QA Engineer' },
-    ],
+    members: [3,5,9,11,16],
     source: 'LinkedIn'
   },
   {
@@ -114,11 +76,7 @@ const projects = [
     title: 'IoT Home Automation System',
     description: 'A system to automate home devices and appliances through IoT.',
     status: 'Pending',
-    members: [
-      { name: 'Marry', role: 'Team Lead' },
-      { name: 'Azam', role: 'Tester' },
-      { name: 'Charlie', role: 'QA Engineer' },
-    ],    
+    members: [2,4,5,6,11],    
     source: 'Upwork'
   },
   {
@@ -126,10 +84,7 @@ const projects = [
     title: 'AI-Powered Chatbot',
     description: 'A chatbot that uses AI to provide customer support and answer queries.',
     status: 'Completed',
-    members: [
-      { name: 'Murtasim', role: 'Team Lead' },
-      { name: 'Ahmed', role: 'App Developer' },
-    ],
+    members: [1,3,6,12],
     source: 'LinkedIn'
   },
   {
@@ -137,10 +92,7 @@ const projects = [
     title: 'Online Learning Platform',
     description: 'A platform for hosting and delivering online courses and certifications.',
     status: 'In Progress',
-    members: [
-      { name: 'Bob', role: 'Team Lead' },
-      { name: 'Bushra', role: 'QA Engineer' },
-    ],
+    members: [2,3,4,5,8],
     source: 'LinkedIn'
   },
   {
@@ -148,30 +100,24 @@ const projects = [
     title: 'Data Visualization Dashboard',
     description: 'A dashboard for visualizing key business metrics using charts and graphs.',
     status: 'In Progress',
-    members: [
-      { name: 'Basil', role: 'Team Lead' },
-      { name: 'Marrium', role: 'Developer' },
-    ],
+    members: [1,2,3,4,6],
+    source: 'LinkedIn'
   },
   {
     id: 14,
     title: 'Blockchain-based Voting System',
     description: 'A secure voting system based on blockchain technology.',
     status: 'Pending',
-    members: [
-      { name: 'Rom', role: 'Team Lead' },
-      { name: 'Pop', role: 'Developer' },
-    ],
+    members: [2,11,12,16],
+    source: 'LinkedIn'
   },
   {
     id: 15,
     title: 'Healthcare Management System',
     description: 'A system for managing patient records, appointments, and billing.',
     status: 'Completed',
-    members: [
-      { name: 'Basil', role: 'Team Lead' },
-      { name: 'Marrium', role: 'Developer' },
-    ],
+    members: [2,3,5,6,8],
+    source: 'LinkedIn'
   }
 ];
 

@@ -5,6 +5,7 @@ const projects = [
     description: 'A system to manage inventory levels, orders, and suppliers.',
     status: 'In Progress',
     members: [1,2,3,4,6,9],
+    teamLead:1,
     source: 'LinkedIn'
   },
   {
@@ -13,6 +14,7 @@ const projects = [
     description: 'A CRM tool for managing interactions with potential and current customers.',
     status: 'Completed',
     members: [4,6,7,9,2],
+    teamLead:7,
     source: 'Upwork'
   },
   {
@@ -21,6 +23,7 @@ const projects = [
     description: 'An online platform for selling products with payment gateway integration.',
     status: 'In Progress',
     members: [3,5,6,9,12,15],
+    teamLead:5,
     source: 'Fiverr'
   },
   {
@@ -29,6 +32,7 @@ const projects = [
     description: 'A system to manage employee data, payroll, and attendance.',
     status: 'Pending',
     members: [2,3,4,7,16],
+    teamLead:7,
     source: 'LinkedIn'
   },
   {
@@ -37,6 +41,7 @@ const projects = [
     description: 'A tool to analyze social media performance and sentiment.',
     status: 'Completed',
     members: [16,11,12,13],
+    teamLead:13,
     source: 'Fiverr'
   },
   {
@@ -45,6 +50,7 @@ const projects = [
     description: 'A web-based tool to manage and track project progress and team collaboration.',
     status: 'In Progress',
     members: [9,8,7,4,3],
+    teamLead:7,
     source: 'Upwork'
   },
   {
@@ -53,6 +59,7 @@ const projects = [
     description: 'A secure cloud storage platform for storing and sharing files.',
     status: 'In Progress',
     members: [1,3,6,8],
+    teamLead:1,
     source: 'LinkedIn'
   },
   {
@@ -61,6 +68,7 @@ const projects = [
     description: 'A mobile application for banking services, including transfers and bill payments.',
     status: 'Completed',
     members: [16,15,12,11 ],
+    teamLead:15,
     source: 'Fiverr'
   },
   {
@@ -69,6 +77,7 @@ const projects = [
     description: 'A training platform to educate employees on cybersecurity best practices.',
     status: 'In Progress',
     members: [3,5,9,11,16],
+    teamLead:5,
     source: 'LinkedIn'
   },
   {
@@ -76,7 +85,8 @@ const projects = [
     title: 'IoT Home Automation System',
     description: 'A system to automate home devices and appliances through IoT.',
     status: 'Pending',
-    members: [2,4,5,6,11],    
+    members: [2,4,5,6,11], 
+    teamLead:5,   
     source: 'Upwork'
   },
   {
@@ -85,6 +95,7 @@ const projects = [
     description: 'A chatbot that uses AI to provide customer support and answer queries.',
     status: 'Completed',
     members: [1,3,6,12],
+    teamLead:1,
     source: 'LinkedIn'
   },
   {
@@ -93,6 +104,7 @@ const projects = [
     description: 'A platform for hosting and delivering online courses and certifications.',
     status: 'In Progress',
     members: [2,3,4,5,8],
+    teamLead:5,
     source: 'LinkedIn'
   },
   {
@@ -101,6 +113,7 @@ const projects = [
     description: 'A dashboard for visualizing key business metrics using charts and graphs.',
     status: 'In Progress',
     members: [1,2,3,4,6],
+    teamLead:1,
     source: 'LinkedIn'
   },
   {
@@ -108,7 +121,8 @@ const projects = [
     title: 'Blockchain-based Voting System',
     description: 'A secure voting system based on blockchain technology.',
     status: 'Pending',
-    members: [2,11,12,16],
+    members: [2,11,12,16,1],
+    teamLead:1,
     source: 'LinkedIn'
   },
   {
@@ -117,6 +131,7 @@ const projects = [
     description: 'A system for managing patient records, appointments, and billing.',
     status: 'Completed',
     members: [2,3,5,6,8],
+    teamLead:5,
     source: 'LinkedIn'
   }
 ];

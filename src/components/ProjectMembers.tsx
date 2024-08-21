@@ -1,26 +1,18 @@
 import React from "react";
 import { Box, Text, VStack } from "@chakra-ui/react";
 
-export interface Member {
+export interface Employee {
+  id: number;
   name: string;
-  role: string;
+  designation: string;
+  contact: string;
 }
 
-interface ProjectMembersProps {
-  members: Member[];
+export interface EmployeeDetailsProps {
+  employees: Employee[];
 }
-
-const ProjectMembers = ({ members }: ProjectMembersProps) => {
-  return (
-    <VStack align="start" spacing={3}>
-      {members.map((member, index) => (
-        <Box key={index}>
-          <Text fontWeight="bold">{member.name}</Text>
-          <Text fontSize="sm">{member.role}</Text>
-        </Box>
-      ))}
-    </VStack>
-  );
+const ProjectMembers = ({ employees }: EmployeeDetailsProps) => {
+  return <div>HI</div>;
 };
 
 export default ProjectMembers;

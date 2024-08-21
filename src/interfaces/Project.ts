@@ -6,4 +6,9 @@ export interface Project {
     status: string;
     members:number[];
     source:string;
+    teamLead:number
 }
+
+export interface ProjectDetailsProps {
+    projects: Project[];
+  }

@@ -3,12 +3,12 @@ import ProjectDetailPage from "../pages/ProjectDetailPage";
 import Homepage from "../pages/Homepage";
 import Layout from "../pages/Layout";
 import ErrorPage from "../pages/ErrorPage";
-import UserManagementPage from "../pages/ProjectTeamPage";
 import SprintDetailsPage from "../pages/SprintDetailsPage";
 import ProjectDashboardPage from "../pages/ProjectDashboardPage";
 import LoginPage from "../pages/LoginPage";
 import ProjectTeamPage from "../pages/ProjectTeamPage";
 import EmployeeManagementPage from "../pages/EmployeeManagementPage";
+import AddMemberPage from "../pages/AddMemberPage";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +27,7 @@ const router = createBrowserRouter([
           { path: "sprint-details", element: <SprintDetailsPage /> },
           { path: "dashboard", element: <ProjectDashboardPage /> },
           { path: "employee-management", element: <EmployeeManagementPage /> },
+          { path: "add-member", element: <AddMemberPage /> },
         ],
       },
     ],

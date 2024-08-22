@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import employee from "../data/employee"; // Adjust path as needed
 import { HStack, Button, Text } from "@chakra-ui/react";
-import ProjectDetailsBox from "../components/DetailsBox";
 import TableComponent from "../components/TableComponent";
 import DetailsBox from "../components/DetailsBox";
 import employeeColumns from "../data/employeeColumns";
@@ -14,7 +13,7 @@ const ProjectTeamPage = () => {
   const project = projectList.find(
     (p) => p.title === decodeURIComponent(title!)
   );
-
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
 
   if (!project) {
@@ -51,21 +50,21 @@ const ProjectTeamPage = () => {
       <HStack spacing={4} mb="4" mt="8" justifyContent="center">
         <Button
           colorScheme="blue"
-          // onClick={() => navigate(`/add-employee/${project.title}`)}
+          onClick={() => navigate(`/projects/${title}/add-member`)}
         >
-          Add Employee
+          Add Member
         </Button>
         <Button
           colorScheme="blue"
           // onClick={() => navigate(`/edit-employee/${project.title}`)}
         >
-          Edit Employee
+          Edit Member
         </Button>
         <Button
           colorScheme="red"
           // onClick={() => navigate(`/remove-employee/${project.title}`)}
         >
-          Remove Employee
+          Remove Member
         </Button>
       </HStack>
     </DetailsBox>

@@ -1,15 +1,20 @@
-import { useEffect, useState } from "react";
-import projects from "../data/projects";
-import { Project } from "../interfaces/Project";
+import { useState } from "react";
+import projectData from "../data/projects";
 
-const useProjects = () =>{
-    const [projectList, setProjectLists] = useState<Project[]>([])
-    const [error, setError] = useState("")
-    useEffect(() => {
-        // Simulate fetching data
-        setProjectLists(projects) }, []);
-    
-    return {projectList,error}
-}
-
-export default useProjects;
+const useProjects = () => {
+    const [projectList, setProjectList] = useState(projectData);
+  
+    const updateProjectMembers = (projectId: number, updatedMembers: number[]) => {
+      const updatedProjects = projectList.map((project) =>
+        project.id === projectId ? { ...project, members: updatedMembers } : project
+      );
+      setProjectList(updatedProjects);
+    };
+  
+    return {
+      projectList,
+      updateProjectMembers,
+    };
+  };
+  
+  export default useProjects;

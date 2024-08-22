@@ -32,10 +32,7 @@ const Sidebar = () => {
               path={`${projectBasePath}/details`}
               label="Project Details"
             />
-            <SidebarItem
-              path={`${projectBasePath}/team`}
-              label="View Members"
-            />
+            <SidebarItem path={`${projectBasePath}/team`} label="View Team" />
             <SidebarItem
               path={`${projectBasePath}/sprint-details`}
               label="Sprint Details"
@@ -43,6 +40,10 @@ const Sidebar = () => {
             <SidebarItem
               path={`${projectBasePath}/dashboard`}
               label="Project Dashboard"
+            />
+            <SidebarItem
+              path={`${projectBasePath}/employee-management`}
+              label="Employee Management"
             />
           </>
         )}

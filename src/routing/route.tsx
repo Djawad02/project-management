@@ -3,10 +3,12 @@ import ProjectDetailPage from "../pages/ProjectDetailPage";
 import Homepage from "../pages/Homepage";
 import Layout from "../pages/Layout";
 import ErrorPage from "../pages/ErrorPage";
-import UserManagementPage from "../pages/UserManagementPage";
+import UserManagementPage from "../pages/ProjectTeamPage";
 import SprintDetailsPage from "../pages/SprintDetailsPage";
 import ProjectDashboardPage from "../pages/ProjectDashboardPage";
 import LoginPage from "../pages/LoginPage";
+import ProjectTeamPage from "../pages/ProjectTeamPage";
+import EmployeeManagementPage from "../pages/EmployeeManagementPage";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +23,10 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <ProjectDetailPage /> },
           { path: "details", element: <ProjectDetailPage /> },
-          { path: "team", element: <UserManagementPage /> },
+          { path: "team", element: <ProjectTeamPage /> },
           { path: "sprint-details", element: <SprintDetailsPage /> },
           { path: "dashboard", element: <ProjectDashboardPage /> },
+          { path: "employee-management", element: <EmployeeManagementPage /> },
         ],
       },
     ],

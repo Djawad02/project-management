@@ -6,8 +6,9 @@ import { HStack, Button, Text } from "@chakra-ui/react";
 import ProjectDetailsBox from "../components/DetailsBox";
 import TableComponent from "../components/TableComponent";
 import DetailsBox from "../components/DetailsBox";
+import employeeColumns from "../data/employeeColumns";
 
-const UserManagementPage = () => {
+const ProjectTeamPage = () => {
   const { title } = useParams();
   const { projectList } = useProjects();
   const project = projectList.find(
@@ -31,13 +32,6 @@ const UserManagementPage = () => {
       employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.designation.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const employeeColumns = [
-    { header: "ID", accessor: "id" },
-    { header: "Name", accessor: "name" },
-    { header: "Designation", accessor: "designation" },
-    { header: "Contact", accessor: "contact" },
-  ];
 
   return (
     <DetailsBox
@@ -78,4 +72,4 @@ const UserManagementPage = () => {
   );
 };
 
-export default UserManagementPage;
+export default ProjectTeamPage;

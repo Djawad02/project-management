@@ -3,7 +3,7 @@ import { Box, Heading, Input, HStack, Button, Text } from "@chakra-ui/react";
 
 interface DetailsBoxProps {
   title: string;
-  context: "teamMembers" | "projectDetails";
+  context: "teamMembers" | "projectDetails" | "employeeManagement";
   showSearchBar?: boolean;
   searchTerm?: string;
   onSearchTermChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -31,8 +31,13 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({
       width="100%"
     >
       <Heading as="h2" size="lg" mb="10">
-        {title} -{" "}
-        {context === "teamMembers" ? "Team Members" : "Project Details"}
+        {context === "teamMembers"
+          ? `${title} - Team Members`
+          : context === "projectDetails"
+          ? `${title} - Project Details`
+          : context === "employeeManagement"
+          ? `${title} - Employee Management`
+          : title}
       </Heading>
 
       <Box

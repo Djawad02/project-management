@@ -20,9 +20,6 @@ const EmployeeManagementPage = () => {
     return <Text>Project not found</Text>;
   }
 
-  // Filter employees based on project member IDs
-
-  // Filter employees based on search term
   const filteredEmployees = employee.filter(
     (employee) =>
       employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

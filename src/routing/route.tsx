@@ -9,6 +9,7 @@ import LoginPage from "../pages/LoginPage";
 import ProjectTeamPage from "../pages/ProjectTeamPage";
 import EmployeeManagementPage from "../pages/EmployeeManagementPage";
 import AddMemberPage from "../pages/AddMemberPage";
+import RemoveMemberPage from "../pages/RemoveMemberPage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
           { path: "dashboard", element: <ProjectDashboardPage /> },
           { path: "employee-management", element: <EmployeeManagementPage /> },
           { path: "add-member", element: <AddMemberPage /> },
+          { path: "remove-member", element: <RemoveMemberPage /> },
         ],
       },
     ],

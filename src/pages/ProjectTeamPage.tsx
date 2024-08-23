@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
-import employee from "../data/employee"; // Adjust path as needed
+import employee from "../data/employee";
 import { HStack, Button, Text } from "@chakra-ui/react";
 import TableComponent from "../components/TableComponent";
 import DetailsBox from "../components/DetailsBox";
@@ -9,12 +9,17 @@ import employeeColumns from "../data/employeeColumns";
 
 const ProjectTeamPage = () => {
   const { title } = useParams();
-  const { projectList } = useProjects();
-  const project = projectList.find(
-    (p) => p.title === decodeURIComponent(title!)
-  );
+  const { projectList, updateProjectMembers } = useProjects();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [project, setProject] = useState<(typeof projectList)[0] | null>(null); // Updated type
+
+  useEffect(() => {
+    const updatedProject = projectList.find(
+      (p) => p.title === decodeURIComponent(title!)
+    );
+    setProject(updatedProject || null); // Set to null if not found
+  }, [projectList, title]);
 
   if (!project) {
     return <Text>Project not found</Text>;
@@ -54,18 +59,8 @@ const ProjectTeamPage = () => {
         >
           Add Member
         </Button>
-        <Button
-          colorScheme="blue"
-          // onClick={() => navigate(`/edit-employee/${project.title}`)}
-        >
-          Edit Member
-        </Button>
-        <Button
-          colorScheme="red"
-          // onClick={() => navigate(`/remove-employee/${project.title}`)}
-        >
-          Remove Member
-        </Button>
+        <Button colorScheme="blue">Edit Member</Button>
+        <Button colorScheme="red">Remove Member</Button>
       </HStack>
     </DetailsBox>
   );

@@ -1,20 +1,24 @@
 import { useState } from "react";
-import projectData from "../data/projects";
+import initialProjectList from "../data/projects";
 
 const useProjects = () => {
-    const [projectList, setProjectList] = useState(projectData);
-  
-    const updateProjectMembers = (projectId: number, updatedMembers: number[]) => {
-      const updatedProjects = projectList.map((project) =>
-        project.id === projectId ? { ...project, members: updatedMembers } : project
+  const [projectList, setProjectList] = useState(initialProjectList);
+
+  const updateProjectMembers = (projectId: number, newMembers: number[]) => {
+    setProjectList((prevProjects) => {
+      const updatedProjects = prevProjects.map((project) =>
+        project.id === projectId
+          ? { ...project, members: newMembers }
+          : project
       );
-      setProjectList(updatedProjects);
-    };
-  
-    return {
-      projectList,
-      updateProjectMembers,
-    };
+      return updatedProjects;
+    });
   };
-  
-  export default useProjects;
+
+  return {
+    projectList,
+    updateProjectMembers,
+  };
+};
+
+export default useProjects;

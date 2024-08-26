@@ -1,13 +1,13 @@
-import { HStack, Button, Text } from "@chakra-ui/react";
+import { HStack, Button, Text, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import DetailsBox from "../components/DetailsBox";
 import TableComponent from "../components/TableComponent";
 import employeeColumns from "../data/employeeColumns";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
-import employee from "../data/employee";
-
+import employeeData from "../data/employee";
 const EmployeeManagementPage = () => {
+  const navigate = useNavigate();
   const { title } = useParams();
   const { projectList } = useProjects();
   const project = projectList.find(
@@ -20,11 +20,21 @@ const EmployeeManagementPage = () => {
     return <Text>Project not found</Text>;
   }
 
-  const filteredEmployees = employee.filter(
-    (employee) =>
-      employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      employee.designation.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredEmployees = employeeData.filter(
+    (employeeData) =>
+      employeeData.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employeeData.designation.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const availableEmployees = employeeData.filter(
+    (emp) => !project.members.includes(emp.id)
+  );
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(
+    null
+  );
+  const [newEmployeeName, setNewEmployeeName] = useState("");
+  const [newEmployeeDesignation, setNewEmployeeDesignation] = useState("");
+  const [newEmployeeContact, setNewEmployeeContact] = useState("");
+
   return (
     <DetailsBox
       showSearchBar={true}
@@ -40,15 +50,16 @@ const EmployeeManagementPage = () => {
         colorScheme="gray"
         width="100%"
       />
+
       <HStack spacing={4} mb="4" mt="8" justifyContent="center">
         <Button
           colorScheme="blue"
-          // onClick={() => navigate(`/add-employee/${project.title}`)}
+          onClick={() => navigate(`/projects/${title}/add-new-employee`)}
         >
           Add Employee
         </Button>
         <Button
-          colorScheme="blue"
+          colorScheme="green"
           // onClick={() => navigate(`/edit-employee/${project.title}`)}
         >
           Edit Employee

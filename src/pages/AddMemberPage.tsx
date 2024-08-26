@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Select, Button, VStack, Text, Input, HStack } from "@chakra-ui/react";
 import useProjects from "../hooks/useProjects";
-import employee from "../data/employee"; // Make sure this is mutable or consider using state if necessary
+import employeeData from "../data/employee"; // Assuming you have a separate file for employee data
 
 const AddMemberPage = () => {
   const { title } = useParams();
@@ -23,6 +23,11 @@ const AddMemberPage = () => {
     return <Text>Project not found</Text>;
   }
 
+  // Filter out employees who are already part of the project
+  const availableEmployees = employeeData.filter(
+    (emp) => !project.members.includes(emp.id)
+  );
+
   const handleAddMember = () => {
     if (
       selectedEmployeeId !== null &&
@@ -36,8 +41,8 @@ const AddMemberPage = () => {
 
   const handleAddNewEmployee = () => {
     if (newEmployeeName && newEmployeeDesignation) {
-      const newEmployeeId = employee.length
-        ? Math.max(...employee.map((emp) => emp.id)) + 1
+      const newEmployeeId = employeeData.length
+        ? Math.max(...employeeData.map((emp) => emp.id)) + 1
         : 1;
       const newEmployee = {
         id: newEmployeeId,
@@ -46,13 +51,14 @@ const AddMemberPage = () => {
         contact: newEmployeeContact,
       };
 
-      // Add the new employee to the list
-      employee.push(newEmployee);
+      // Add the new employee to the list (This update should be done in the data source or state management if using a backend)
+      employeeData.push(newEmployee);
 
       // Clear input fields
       setNewEmployeeName("");
       setNewEmployeeDesignation("");
       setNewEmployeeContact("");
+
       // Optionally set this new employee as selected
       setSelectedEmployeeId(newEmployeeId);
     }
@@ -65,14 +71,18 @@ const AddMemberPage = () => {
         placeholder="Select employee"
         onChange={(e) => setSelectedEmployeeId(Number(e.target.value))}
       >
-        {employee.map((emp) => (
+        {availableEmployees.map((emp) => (
           <option key={emp.id} value={emp.id}>
             {emp.name} - {emp.designation}
           </option>
         ))}
       </Select>
 
-      <Button colorScheme="blue" onClick={handleAddMember}>
+      <Button
+        colorScheme="blue"
+        onClick={handleAddMember}
+        isDisabled={selectedEmployeeId === null}
+      >
         Add Member
       </Button>
 

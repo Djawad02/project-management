@@ -86,10 +86,19 @@ const TableComponent: React.FC<TableComponentProps> = ({
                     key={column.accessor}
                     borderColor={borderColor}
                     whiteSpace={
-                      column.accessor === "description" ? "normal" : "nowrap"
+                      column.accessor === "projects" ||
+                      column.accessor === "description"
+                        ? "normal"
+                        : "nowrap"
                     }
                     overflow="hidden"
                     textOverflow="ellipsis"
+                    wordBreak={
+                      column.accessor === "projects" ||
+                      column.accessor === "description"
+                        ? "break-word"
+                        : "normal"
+                    }
                   >
                     {row[column.accessor]}
                   </Td>

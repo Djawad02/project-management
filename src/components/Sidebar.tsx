@@ -42,6 +42,10 @@ const Sidebar = () => {
               label="Project Dashboard"
             />
             <SidebarItem
+              path={`${projectBasePath}/resource-management`}
+              label="Resource Management"
+            />
+            <SidebarItem
               path={`${projectBasePath}/employee-management`}
               label="Employee Management"
             />

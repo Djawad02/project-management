@@ -1,24 +1,27 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
-import employee from "../data/employee";
+import employees from "../data/employee"; // Import Employee interface
 import { HStack, Button, Text } from "@chakra-ui/react";
 import TableComponent from "../components/TableComponent";
 import DetailsBox from "../components/DetailsBox";
 import employeeColumns from "../data/employeeColumns";
+import { Employee } from "../interfaces/Employee";
 
 const ProjectTeamPage = () => {
   const { title } = useParams();
-  const { projectList, updateProjectMembers } = useProjects();
+  const { projectList } = useProjects();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [project, setProject] = useState<(typeof projectList)[0] | null>(null); // Updated type
+  const [project, setProject] = useState(() =>
+    projectList.find((p) => p.title === decodeURIComponent(title!))
+  );
 
   useEffect(() => {
     const updatedProject = projectList.find(
       (p) => p.title === decodeURIComponent(title!)
     );
-    setProject(updatedProject || null); // Set to null if not found
+    setProject(updatedProject);
   }, [projectList, title]);
 
   if (!project) {
@@ -26,13 +29,13 @@ const ProjectTeamPage = () => {
   }
 
   // Filter employees based on project member IDs
-  const projectEmployees = employee.filter((e) =>
+  const projectEmployees = employees.filter((e: Employee) =>
     project.members.includes(e.id)
   );
 
   // Filter employees based on search term
   const filteredEmployees = projectEmployees.filter(
-    (employee) =>
+    (employee: Employee) =>
       employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.designation.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -59,8 +62,18 @@ const ProjectTeamPage = () => {
         >
           Add Member
         </Button>
-        <Button colorScheme="blue">Edit Member</Button>
-        <Button colorScheme="red">Remove Member</Button>
+        <Button
+          colorScheme="green"
+          // onClick={() => navigate(`/projects/${title}/remove-member`)}
+        >
+          Edit Member
+        </Button>
+        <Button
+          colorScheme="red"
+          onClick={() => navigate(`/projects/${title}/remove-member`)}
+        >
+          Remove Member
+        </Button>
       </HStack>
     </DetailsBox>
   );

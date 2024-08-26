@@ -1,63 +1,47 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useProjects from "../hooks/useProjects"; // Import the hook
-import employee from "../data/employee";
-import { HStack, Button, Text } from "@chakra-ui/react";
+import useProjects from "../hooks/useProjects";
+import { Button, HStack, Text } from "@chakra-ui/react";
 import TableComponent from "../components/TableComponent";
+import employees from "../data/employee"; // Assuming you have a projects array
 import DetailsBox from "../components/DetailsBox";
-import employeeColumns from "../data/employeeColumns";
 
-const ProjectTeamPage = () => {
+const ProjectDetailPage = () => {
   const { title } = useParams();
-  const { projectList, updateProjectMembers } = useProjects(); // Destructure the hook to use projectList and updateProjectMembers
+  const { projectList } = useProjects();
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [project, setProject] = useState(() =>
-    projectList.find((p) => p.title === decodeURIComponent(title!))
-  );
 
-  // Effect to update the project state whenever projectList or title changes
-  useEffect(() => {
-    const updatedProject = projectList.find(
-      (p) => p.title === decodeURIComponent(title!)
-    );
-    setProject(updatedProject);
-  }, [projectList, title]);
+  const project = projectList.find(
+    (p) => p.title === decodeURIComponent(title!)
+  );
 
   if (!project) {
     return <Text>Project not found</Text>;
   }
 
-  // Filter employees based on project member IDs
-  const projectEmployees = employee.filter((e) =>
-    project.members.includes(e.id)
-  );
+  const teamLead =
+    employees.find((e) => e.id === project.teamLead)?.name || "Unknown";
 
-  // Filter employees based on search term
-  const filteredEmployees = projectEmployees.filter(
-    (employee) =>
-      employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      employee.designation.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // Function to handle adding a member (example implementation)
-  const handleAddMember = (newMemberId: number) => {
-    // Update the project members
-    updateProjectMembers(project.id, [...project.members, newMemberId]);
-    // Optionally navigate back to project team page or any other action
+  const projectWithTeamLeadName = {
+    ...project,
+    teamLead: teamLead, // Replace teamLead ID with the name
   };
+  const projectColumns = [
+    // { header: "Project ID", accessor: "projectId" },
+    { header: "Title", accessor: "title" },
+    { header: "Description", accessor: "description" },
+    { header: "Team Lead", accessor: "teamLead" },
+    { header: "Source", accessor: "source" },
+  ];
+
+  // Create a single item array for the TableComponent
+  const projectData = [project];
 
   return (
-    <DetailsBox
-      showSearchBar={true}
-      context="teamMembers"
-      title={project.title}
-      searchTerm={searchTerm}
-      onSearchTermChange={(e) => setSearchTerm(e.target.value)}
-    >
+    <DetailsBox title={project.title} context="projectDetails">
       <TableComponent
-        columns={employeeColumns}
-        data={filteredEmployees}
+        columns={projectColumns}
+        data={[projectWithTeamLeadName]}
         borderColor="blue.900"
         colorScheme="gray"
         width="100%"
@@ -65,26 +49,15 @@ const ProjectTeamPage = () => {
       <HStack spacing={4} mb="4" mt="8" justifyContent="center">
         <Button
           colorScheme="blue"
-          onClick={() => navigate(`/projects/${title}/add-member`)}
+          onClick={() =>
+            navigate(`/projects/${encodeURIComponent(project.title)}/team`)
+          }
         >
-          Add Member
-        </Button>
-        <Button
-          colorScheme="blue"
-          // Add functionality for Edit Member
-          // onClick={() => navigate(`/edit-employee/${project.title}`)}
-        >
-          Edit Member
-        </Button>
-        <Button
-          colorScheme="red"
-          onClick={() => navigate(`/projects/${title}/remove-member`)}
-        >
-          Remove Member
+          View Team
         </Button>
       </HStack>
     </DetailsBox>
   );
 };
 
-export default ProjectTeamPage;
+export default ProjectDetailPage;

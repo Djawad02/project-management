@@ -1,4 +1,6 @@
-const employee = [
+import { Employee } from "../interfaces/Employee";
+
+ const employees: Employee[] = [
     { id: 1, name: 'Ammar', designation: 'Team Lead', contact:'ammar@codesorbit.com' },
     { id: 2, name: 'Dania', designation: 'Developer', contact:'dania@codesorbit.com'},
     { id: 3, name: 'Aslam', designation: 'Developer', contact:'aslam@codesorbit.com' },
@@ -17,5 +19,4 @@ const employee = [
     { id: 16, name: 'Bob', designation: 'Developer' , contact:'bob@codesorbit.com' },
     { id: 17, name: 'Charlie', designation: 'QA Engineer' , contact:'charlie@codesorbit.com' },
   ];
-
-export default employee;
+  export default employees;

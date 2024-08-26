@@ -10,6 +10,7 @@ import ProjectTeamPage from "../pages/ProjectTeamPage";
 import EmployeeManagementPage from "../pages/EmployeeManagementPage";
 import AddMemberPage from "../pages/AddMemberPage";
 import RemoveMemberPage from "../pages/RemoveMemberPage";
+import ResourceManagementPage from "../pages/ResourceManagementPage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
           { path: "sprint-details", element: <SprintDetailsPage /> },
           { path: "dashboard", element: <ProjectDashboardPage /> },
           { path: "employee-management", element: <EmployeeManagementPage /> },
+          { path: "resource-management", element: <ResourceManagementPage /> },
           { path: "add-member", element: <AddMemberPage /> },
           { path: "remove-member", element: <RemoveMemberPage /> },
         ],

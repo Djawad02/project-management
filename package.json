@@ -10,14 +10,17 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
-    "@emotion/react": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@tanstack/react-query": "4.28",
-    "framer-motion": "^11.3.28",
+    "chart.js": "^4.4.4",
+    "framer-motion": "^11.3.29",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
-    "react-router-dom": "^6.10.0"
+    "react-router-dom": "^6.10.0",
+    "recharts": "^2.12.7"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

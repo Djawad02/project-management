@@ -13,6 +13,7 @@ import RemoveMemberPage from "../pages/RemoveMemberPage";
 import ResourceManagementPage from "../pages/ResourceManagementPage";
 import AddNewEmployeeOrganization from "../pages/AddNewEmployeeOrganization";
 import RemoveEmployeeOrganization from "../pages/RemoveEmployeeOrganization";
+import EmployeeDetailPage from "../pages/EmployeeDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
           {
             path: "remove-employee-organization",
             element: <RemoveEmployeeOrganization />,
+          },
+          {
+            path: "employee-detail",
+            element: <EmployeeDetailPage />,
           },
         ],
       },

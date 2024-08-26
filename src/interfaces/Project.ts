@@ -1,3 +1,5 @@
+import { Deadline } from "./Deadline";
+import { Sprint } from "./Sprint";
 
 export interface Project {
     id: number;
@@ -6,7 +8,9 @@ export interface Project {
     status: string;
     members:number[];
     source:string;
-    teamLead:number
+    teamLead:number;
+    deadlines?: Deadline[]; // Optional field for deadlines
+    sprints?: Sprint[]; 
 }
 
 export interface ProjectDetailsProps {

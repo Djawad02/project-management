@@ -1,4 +1,4 @@
-import { HStack, Button, Text, Input } from "@chakra-ui/react";
+import { HStack, Button, Text, Input, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import DetailsBox from "../components/DetailsBox";
 import TableComponent from "../components/TableComponent";
@@ -71,6 +71,14 @@ const EmployeeManagementPage = () => {
           }
         >
           Remove Employee
+        </Button>
+      </HStack>
+      <HStack spacing={2} justifyContent="center" mt={4} ml={-6}>
+        <Button
+          colorScheme="blue"
+          onClick={() => navigate(`/projects/${title}/employee-detail`)}
+        >
+          View Employee
         </Button>
       </HStack>
     </DetailsBox>

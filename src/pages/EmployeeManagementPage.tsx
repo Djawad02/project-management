@@ -66,7 +66,9 @@ const EmployeeManagementPage = () => {
         </Button>
         <Button
           colorScheme="red"
-          // onClick={() => navigate(`/remove-employee/${project.title}`)}
+          onClick={() =>
+            navigate(`/projects/${title}/remove-employee-organization`)
+          }
         >
           Remove Employee
         </Button>

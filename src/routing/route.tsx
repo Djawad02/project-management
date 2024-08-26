@@ -12,6 +12,7 @@ import AddMemberPage from "../pages/AddMemberPage";
 import RemoveMemberPage from "../pages/RemoveMemberPage";
 import ResourceManagementPage from "../pages/ResourceManagementPage";
 import AddNewEmployeeOrganization from "../pages/AddNewEmployeeOrganization";
+import RemoveEmployeeOrganization from "../pages/RemoveEmployeeOrganization";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
           { path: "add-member", element: <AddMemberPage /> },
           { path: "remove-member", element: <RemoveMemberPage /> },
           { path: "add-new-employee", element: <AddNewEmployeeOrganization /> },
+          {
+            path: "remove-employee-organization",
+            element: <RemoveEmployeeOrganization />,
+          },
         ],
       },
     ],

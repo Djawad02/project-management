@@ -27,13 +27,22 @@ const RemoveMemberPage = () => {
 
   const handleRemoveMember = () => {
     if (selectedEmployeeId !== null) {
-      const updatedMembers = project.members.filter(
-        (memberId) => memberId !== selectedEmployeeId
+      // Find index of the employee in the organization list
+      const employeeIndex = employee.findIndex(
+        (emp) => emp.id === selectedEmployeeId
       );
 
-      updateProjectMembers(project.id, updatedMembers); // Ensure state is updated
+      // Remove the employee from the organization list
+      if (employeeIndex > -1) {
+        employee.splice(employeeIndex, 1); // Remove the employee from the array
+      }
 
-      navigate(-1); // Navigate back to the previous page
+      // Update any state or perform actions needed after removing an employee
+      // For example, you might want to update the backend or state management
+      // updateEmployeeList(employeeData); // Uncomment if using state management or backend
+
+      // Navigate back to the previous page or confirm removal
+      navigate(-1);
     }
   };
 

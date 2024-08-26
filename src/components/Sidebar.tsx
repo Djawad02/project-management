@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { VStack, Box } from "@chakra-ui/react";
 import SidebarItem from "./SidebarItem";
 import { useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -11,7 +12,8 @@ const Sidebar = () => {
   const projectBasePath = isProjectPage
     ? location.pathname.split("/").slice(0, 3).join("/")
     : "";
-
+  const { user } = useContext(AuthContext); // Get the current user from context
+  const userRole = user?.role || ""; // Get user role
   return (
     <VStack
       justifyContent="left"
@@ -41,14 +43,19 @@ const Sidebar = () => {
               path={`${projectBasePath}/dashboard`}
               label="Project Dashboard"
             />
-            <SidebarItem
-              path={`${projectBasePath}/resource-management`}
-              label="Resource Management"
-            />
-            <SidebarItem
-              path={`${projectBasePath}/employee-management`}
-              label="Employee Management"
-            />
+            {userRole == "Admin" ||
+              (userRole == "TeamLead" && (
+                <>
+                  <SidebarItem
+                    path={`${projectBasePath}/resource-management`}
+                    label="Resource Management"
+                  />
+                  <SidebarItem
+                    path={`${projectBasePath}/employee-management`}
+                    label="Employee Management"
+                  />
+                </>
+              ))}
           </>
         )}
       </Box>

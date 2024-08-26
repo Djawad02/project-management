@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { deadlines } from "../data/deadline"; // Ensure correct path
 import projects from "../data/projects"; // Ensure correct path
@@ -14,12 +14,18 @@ import {
   AccordionButton,
   Box,
   HStack,
+  VStack,
 } from "@chakra-ui/react";
 import DetailsBox from "../components/DetailsBox";
 import InputFields from "../components/InputFields"; // Your reusable component
+import { AuthContext } from "../context/AuthContext";
 
 const SprintDetailsPage: React.FC = () => {
   const { title } = useParams<{ title: string }>(); // Extracting title from URL
+
+  const { user } = useContext(AuthContext); // Get the current user from context
+  const userRole = user?.role || ""; // Get user role
+
   const [projectSprints, setProjectSprints] = useState<Sprint[]>([]);
   const [projectDeadlines, setProjectDeadlines] = useState<Deadline[]>([]);
   const [isAddingSprint, setIsAddingSprint] = useState(false);
@@ -141,91 +147,101 @@ const SprintDetailsPage: React.FC = () => {
                   </Text>
                   <Text>Description: {sprint.description}</Text>
                   <Text>Status: {sprint.status}</Text>
-                  <HStack>
-                    <Button
-                      mt={2}
-                      colorScheme="blue"
-                      onClick={() => handleEditSprint(sprint.id)}
-                    >
-                      Edit Sprint
-                    </Button>
-                    <Button
-                      mt={2}
-                      colorScheme="red"
-                      onClick={() => handleRemoveSprint(sprint.id)}
-                    >
-                      Remove Sprint
-                    </Button>
-                  </HStack>
+                  {(userRole === "Admin" || userRole === "TeamLead") && (
+                    <HStack>
+                      <Button
+                        mt={2}
+                        colorScheme="blue"
+                        onClick={() => handleEditSprint(sprint.id)}
+                      >
+                        Edit Sprint
+                      </Button>
+                      <Button
+                        mt={2}
+                        colorScheme="red"
+                        onClick={() => handleRemoveSprint(sprint.id)}
+                      >
+                        Remove Sprint
+                      </Button>
+                    </HStack>
+                  )}
                 </AccordionPanel>
               </AccordionItem>
             ))}
           </Accordion>
         ) : (
-          <p>No sprints available for this project.</p>
+          <Text>No sprints available for this project.</Text>
         )}
 
-        <HStack spacing={2} justify="space-between">
-          <Button mt={4} colorScheme="blue" onClick={handleAddSprint}>
-            Add New Sprint
-          </Button>
+        {(userRole === "Admin" || userRole === "TeamLead") && (
+          <>
+            <Button mt={4} colorScheme="blue" onClick={handleAddSprint}>
+              Add New Sprint
+            </Button>
+            {(isAddingSprint || isEditingSprint) && (
+              <InputFields
+                fields={[
+                  {
+                    id: "sprint-title",
+                    label: "Sprint Title",
+                    placeholder: "Enter sprint title",
+                    value: newSprint.sprintTitle,
+                    onChange: (e) =>
+                      setNewSprint({
+                        ...newSprint,
+                        sprintTitle: e.target.value,
+                      }),
+                  },
+                  {
+                    id: "sprint-start-date",
+                    label: "Start Date",
+                    placeholder: "Enter start date",
+                    value: newSprint.startDate,
+                    onChange: (e) =>
+                      setNewSprint({ ...newSprint, startDate: e.target.value }),
+                  },
+                  {
+                    id: "sprint-end-date",
+                    label: "End Date",
+                    placeholder: "Enter end date",
+                    value: newSprint.endDate,
+                    onChange: (e) =>
+                      setNewSprint({ ...newSprint, endDate: e.target.value }),
+                  },
+                  {
+                    id: "sprint-description",
+                    label: "Description",
+                    placeholder: "Enter description",
+                    value: newSprint.description,
+                    onChange: (e) =>
+                      setNewSprint({
+                        ...newSprint,
+                        description: e.target.value,
+                      }),
+                  },
+                  {
+                    id: "sprint-status",
+                    label: "Status",
+                    placeholder: "Enter status",
+                    value: newSprint.status,
+                    onChange: (e) =>
+                      setNewSprint({ ...newSprint, status: e.target.value }),
+                  },
+                ]}
+              />
+            )}
+            {(isAddingSprint || isEditingSprint) && (
+              <Button mt={2} colorScheme="green" onClick={handleSaveSprint}>
+                {isEditingSprint ? "Update Sprint" : "Save Sprint"}
+              </Button>
+            )}
+          </>
+        )}
+        <VStack spacing={2} justify="space-between">
           <Button mt={4} colorScheme="blue" onClick={handleDeadlineView}>
             {showDeadlines ? "Hide Deadlines" : "View Deadlines"}
           </Button>
-        </HStack>
-
-        {(isAddingSprint || isEditingSprint) && (
-          <InputFields
-            fields={[
-              {
-                id: "sprint-title",
-                label: "Sprint Title",
-                placeholder: "Enter sprint title",
-                value: newSprint.sprintTitle,
-                onChange: (e) =>
-                  setNewSprint({ ...newSprint, sprintTitle: e.target.value }),
-              },
-              {
-                id: "sprint-start-date",
-                label: "Start Date",
-                placeholder: "Enter start date",
-                value: newSprint.startDate,
-                onChange: (e) =>
-                  setNewSprint({ ...newSprint, startDate: e.target.value }),
-              },
-              {
-                id: "sprint-end-date",
-                label: "End Date",
-                placeholder: "Enter end date",
-                value: newSprint.endDate,
-                onChange: (e) =>
-                  setNewSprint({ ...newSprint, endDate: e.target.value }),
-              },
-              {
-                id: "sprint-description",
-                label: "Description",
-                placeholder: "Enter description",
-                value: newSprint.description,
-                onChange: (e) =>
-                  setNewSprint({ ...newSprint, description: e.target.value }),
-              },
-              {
-                id: "sprint-status",
-                label: "Status",
-                placeholder: "Enter status",
-                value: newSprint.status,
-                onChange: (e) =>
-                  setNewSprint({ ...newSprint, status: e.target.value }),
-              },
-            ]}
-          />
-        )}
-        {(isAddingSprint || isEditingSprint) && (
-          <Button mt={2} colorScheme="green" onClick={handleSaveSprint}>
-            {isEditingSprint ? "Update Sprint" : "Save Sprint"}
-          </Button>
-        )}
-
+        </VStack>
         {showDeadlines && projectDeadlines.length > 0 && (
           <div>
             <Text mt={4} fontWeight="bold">

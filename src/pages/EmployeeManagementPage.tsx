@@ -1,11 +1,12 @@
 import { HStack, Button, Text, Input, VStack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import DetailsBox from "../components/DetailsBox";
 import TableComponent from "../components/TableComponent";
 import employeeColumns from "../data/employeeColumns";
 import { useNavigate, useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import employeeData from "../data/employee";
+import { AuthContext } from "../context/AuthContext";
 const EmployeeManagementPage = () => {
   const navigate = useNavigate();
   const { title } = useParams();
@@ -35,6 +36,14 @@ const EmployeeManagementPage = () => {
   const [newEmployeeDesignation, setNewEmployeeDesignation] = useState("");
   const [newEmployeeContact, setNewEmployeeContact] = useState("");
 
+  const { user } = useContext(AuthContext); // Get the current user from context
+  const userRole = user?.role || ""; // Get user role
+  const canEditMembers =
+    user && (user.role === "Admin" || project.teamLead === user.id);
+  const projectEmpl =
+    userRole === "Admin"
+      ? employeeData
+      : employeeData.filter((emp) => !project.members.includes(emp.id));
   return (
     <DetailsBox
       showSearchBar={true}
@@ -52,34 +61,46 @@ const EmployeeManagementPage = () => {
       />
 
       <HStack spacing={4} mb="4" mt="8" justifyContent="center">
-        <Button
-          colorScheme="blue"
-          onClick={() => navigate(`/projects/${title}/add-new-employee`)}
-        >
-          Add Employee
-        </Button>
-        <Button
-          colorScheme="green"
-          // onClick={() => navigate(`/edit-employee/${project.title}`)}
-        >
-          Edit Employee
-        </Button>
-        <Button
-          colorScheme="red"
-          onClick={() =>
-            navigate(`/projects/${title}/remove-employee-organization`)
-          }
-        >
-          Remove Employee
-        </Button>
+        {userRole === "Admin" && (
+          <>
+            <Button
+              colorScheme="blue"
+              onClick={() => navigate(`/projects/${title}/add-new-employee`)}
+            >
+              Add Employee
+            </Button>
+            <Button
+              colorScheme="green"
+              // onClick={() => navigate(`/edit-employee/${project.title}`)}
+            >
+              Edit Employee
+            </Button>
+            <Button
+              colorScheme="red"
+              onClick={() =>
+                navigate(`/projects/${title}/remove-employee-organization`)
+              }
+            >
+              Remove Employee
+            </Button>
+          </>
+        )}
       </HStack>
       <HStack spacing={2} justifyContent="center" mt={4} ml={-6}>
-        <Button
-          colorScheme="blue"
-          onClick={() => navigate(`/projects/${title}/employee-detail`)}
-        >
-          View Employee
-        </Button>
+        {userRole === "Admin" ||
+          (userRole === "TeamLead" && (
+            <Button
+              colorScheme="blue"
+              onClick={() => navigate(`/projects/${title}/employee-detail`)}
+            >
+              View Employee
+            </Button>
+          ))}
+        {!canEditMembers && (
+          <Text textAlign="center" mt="8" color="gray.500">
+            You do not have permission to modify project members.
+          </Text>
+        )}
       </HStack>
     </DetailsBox>
   );

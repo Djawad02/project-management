@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import employees from "../data/employee"; // Import Employee interface
@@ -7,6 +7,7 @@ import TableComponent from "../components/TableComponent";
 import DetailsBox from "../components/DetailsBox";
 import employeeColumns from "../data/employeeColumns";
 import { Employee } from "../interfaces/Employee";
+import { AuthContext } from "../context/AuthContext";
 
 const ProjectTeamPage = () => {
   const { title } = useParams();
@@ -16,6 +17,8 @@ const ProjectTeamPage = () => {
   const [project, setProject] = useState(() =>
     projectList.find((p) => p.title === decodeURIComponent(title!))
   );
+
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const updatedProject = projectList.find(
@@ -39,6 +42,8 @@ const ProjectTeamPage = () => {
       employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.designation.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const canEditMembers =
+    user && (user.role === "Admin" || project.teamLead === user.id);
 
   return (
     <DetailsBox
@@ -56,24 +61,34 @@ const ProjectTeamPage = () => {
         width="100%"
       />
       <HStack spacing={4} mb="4" mt="8" justifyContent="center">
-        <Button
-          colorScheme="blue"
-          onClick={() => navigate(`/projects/${title}/add-member`)}
-        >
-          Add Member
-        </Button>
-        <Button
-          colorScheme="green"
-          // onClick={() => navigate(`/projects/${title}/remove-member`)}
-        >
-          Edit Member
-        </Button>
-        <Button
-          colorScheme="red"
-          onClick={() => navigate(`/projects/${title}/remove-member`)}
-        >
-          Remove Member
-        </Button>
+        {canEditMembers && (
+          <HStack spacing={4} mb="4" mt="8" justifyContent="center">
+            <Button
+              colorScheme="blue"
+              onClick={() => navigate(`/projects/${title}/add-member`)}
+            >
+              Add Member
+            </Button>
+            <Button
+              colorScheme="green"
+              // Add functionality if needed
+              onClick={() => navigate(`/projects/${title}/edit-member`)}
+            >
+              Edit Member
+            </Button>
+            <Button
+              colorScheme="red"
+              onClick={() => navigate(`/projects/${title}/remove-member`)}
+            >
+              Remove Member
+            </Button>
+          </HStack>
+        )}
+        {!canEditMembers && (
+          <Text textAlign="center" mt="8" color="gray.500">
+            You do not have permission to modify project members.
+          </Text>
+        )}
       </HStack>
     </DetailsBox>
   );

@@ -3,7 +3,7 @@ import { Box, Heading, Input, HStack, Button, Text } from "@chakra-ui/react";
 
 interface DetailsBoxProps {
   title: string;
-  context: "teamMembers" | "projectDetails" | "employeeManagement";
+  context?: "teamMembers" | "projectDetails" | "employeeManagement";
   showSearchBar?: boolean;
   searchTerm?: string;
   onSearchTermChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

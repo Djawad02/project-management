@@ -5,7 +5,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import DetailsBox from "./DetailsBox";
 import { useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
-import { Text } from "@chakra-ui/react";
+import { Center, Text } from "@chakra-ui/react";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface EmployeeData {
@@ -38,17 +38,10 @@ const PieChartComponent: React.FC<PieChartComponentProps> = ({ data }) => {
     return <Text>Project not found</Text>;
   }
   return (
-    <DetailsBox
-      showSearchBar={false}
-      context="employeeManagement"
-      title={project.title}
-    >
-      <div style={{ width: "100%", height: "400px", alignItems: "center" }}>
-        {" "}
-        {/* Adjust the width and height here */}
-        <Pie data={chartData} />
-      </div>
-    </DetailsBox>
+    <Center width="100%" height="400px">
+      {" "}
+      <Pie data={chartData} />
+    </Center>
   );
 };
 

@@ -16,9 +16,6 @@ const AddMemberPage = () => {
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(
     null
   );
-  const [newEmployeeName, setNewEmployeeName] = useState("");
-  const [newEmployeeDesignation, setNewEmployeeDesignation] = useState("");
-  const [newEmployeeContact, setNewEmployeeContact] = useState("");
 
   if (!project) {
     return <Text>Project not found</Text>;

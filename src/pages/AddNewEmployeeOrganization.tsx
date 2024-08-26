@@ -86,7 +86,11 @@ const AddNewEmployeeOrganization = () => {
         <Button
           colorScheme="blue"
           onClick={handleAddNewEmployee}
-          isDisabled={selectedEmployeeId === null}
+          // isDisabled={
+          //   newEmployeeName === null ||
+          //   newEmployeeContact === null ||
+          //   newEmployeeDesignation === null
+          // }
         >
           Add
         </Button>

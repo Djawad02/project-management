@@ -1,18 +1,18 @@
-// useProjects.ts
 import { useState } from "react";
-import initialProjectList from "../data/projects"; // Assume initial data comes from a separate file
+import initialProjectList from "../data/projects"; // Your initial project data
 
 const useProjects = () => {
   const [projectList, setProjectList] = useState(initialProjectList);
 
-  const updateProjectMembers = (projectId: number, updatedMembers: number[]) => {
-    setProjectList((prevProjects) =>
-      prevProjects.map((project) =>
-        project.id === projectId
-          ? { ...project, members: updatedMembers } // Creates a new object with updated members
-          : project
-      )
-    );
+  // Function to update project members
+  const updateProjectMembers = (projectId: number, newMembers: number[]) => {
+    setProjectList((prevProjects) => {
+      const updatedProjects = prevProjects.map((project) =>
+        project.id === projectId ? { ...project, members: newMembers } : project
+      );
+      console.log("Updated Projects after modification:", updatedProjects); // Debugging
+      return updatedProjects;
+    });
   };
 
   return {

@@ -5,4 +5,5 @@ export interface Sprint {
     startDate: string; // ISO date string
     endDate: string; // ISO date string
     description: string;
+    status: string;
   }

@@ -5,10 +5,16 @@ import ProjectCards from "./ProjectCards";
 import ProjectCardContainer from "./ProjectCardContainer";
 import { AuthContext } from "../context/AuthContext";
 import useUser from "../hooks/useUser";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ProjectGrid = () => {
+  const navigate = useNavigate();
   const { projectList } = useProjects();
   const userRole = useUser();
+  const handleNewProject = () => {
+    navigate(`new-project`);
+  };
+
   return (
     <>
       <Box padding="10px">
@@ -17,8 +23,8 @@ const ProjectGrid = () => {
             You have read-only access to the projects.
           </Text>
         ) : (
-          <Button colorScheme="blue" mb={4}>
-            {userRole === "Admin" ? "Add New Project" : "Request Access"}
+          <Button colorScheme="blue" mb={4} onClick={handleNewProject}>
+            Add New Project
           </Button>
         )}
         <SimpleGrid

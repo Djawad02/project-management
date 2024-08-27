@@ -1,7 +1,6 @@
 import { Grid, GridItem, Show } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import ProjectGrid from "../components/ProjectGrid";
-import Sidebar from "../components/Sidebar";
 import { AuthContext } from "../context/AuthContext";
 
 const Homepage = () => {

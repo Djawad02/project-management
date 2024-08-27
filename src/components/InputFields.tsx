@@ -3,6 +3,7 @@ import { HStack, Input, FormControl, FormLabel } from "@chakra-ui/react";
 
 interface InputField {
   id: string;
+  name?: string;
   label: string;
   placeholder: string;
   value: string;
@@ -21,6 +22,7 @@ const InputFields = ({ fields }: InputFieldsProps) => {
           <FormLabel htmlFor={field.id}>{field.label}</FormLabel>
           <Input
             id={field.id}
+            name={field.id}
             placeholder={field.placeholder}
             value={field.value}
             onChange={field.onChange}

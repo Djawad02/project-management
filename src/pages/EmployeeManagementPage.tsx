@@ -58,7 +58,9 @@ const EmployeeManagementPage = () => {
             </Button>
             <Button
               colorScheme="green"
-              // onClick={() => navigate(`/edit-employee/${project.title}`)}
+              onClick={() =>
+                navigate(`/projects/${project.title}/edit-employee`)
+              }
             >
               Edit Employee
             </Button>

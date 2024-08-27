@@ -4,6 +4,8 @@ import { Select, Button, VStack, Text } from "@chakra-ui/react";
 import useProjects from "../hooks/useProjects";
 import employee from "../data/employee";
 import DetailsBox from "../components/DetailsBox";
+import employees from "../data/employee";
+import { Employee } from "../interfaces/Employee";
 
 const RemoveMemberPage = () => {
   const { title } = useParams();
@@ -23,7 +25,9 @@ const RemoveMemberPage = () => {
   }
 
   // Fetch only the employees that are members of the project
-  const projectMembers = employee.filter((e) => project.members.includes(e.id));
+  const projectMembers = employees.filter((e: Employee) =>
+    (project.members as number[]).includes(e.id)
+  );
 
   const handleRemoveMember = () => {
     if (selectedEmployeeId !== null) {

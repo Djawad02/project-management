@@ -33,7 +33,7 @@ const ProjectTeamPage = () => {
 
   // Filter employees based on project member IDs
   const projectEmployees = employees.filter((e: Employee) =>
-    project.members.includes(e.id)
+    (project.members as number[]).includes(e.id)
   );
 
   // Filter employees based on search term
@@ -68,13 +68,6 @@ const ProjectTeamPage = () => {
               onClick={() => navigate(`/projects/${title}/add-member`)}
             >
               Add Member
-            </Button>
-            <Button
-              colorScheme="green"
-              // Add functionality if needed
-              onClick={() => navigate(`/projects/${title}/edit-member`)}
-            >
-              Edit Member
             </Button>
             <Button
               colorScheme="red"

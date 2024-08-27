@@ -14,6 +14,8 @@ import ResourceManagementPage from "../pages/ResourceManagementPage";
 import AddNewEmployeeOrganization from "../pages/AddNewEmployeeOrganization";
 import RemoveEmployeeOrganization from "../pages/RemoveEmployeeOrganization";
 import EmployeeDetailPage from "../pages/EmployeeDetailPage";
+import AddNewProject from "../pages/AddNewProject";
+import EditMemberPage from "../pages/EditEmployeePage";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,10 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Homepage /> },
       { path: "login", element: <LoginPage /> },
+      {
+        path: "new-project",
+        element: <AddNewProject />,
+      },
       {
         path: "projects/:title",
         children: [
@@ -35,6 +41,7 @@ const router = createBrowserRouter([
           { path: "resource-management", element: <ResourceManagementPage /> },
           { path: "add-member", element: <AddMemberPage /> },
           { path: "remove-member", element: <RemoveMemberPage /> },
+          { path: "edit-employee", element: <EditMemberPage /> },
           { path: "add-new-employee", element: <AddNewEmployeeOrganization /> },
           {
             path: "remove-employee-organization",

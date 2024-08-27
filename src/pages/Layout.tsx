@@ -1,11 +1,21 @@
 // Layout.tsx
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Box, Grid, GridItem, Show } from "@chakra-ui/react";
 import Sidebar from "../components/Sidebar";
+import { AuthContext } from "../context/AuthContext";
 
 const Layout = () => {
+  const { user } = useContext(AuthContext);
+  const userRole = user?.role;
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
   return (
     <>
       <Navbar />

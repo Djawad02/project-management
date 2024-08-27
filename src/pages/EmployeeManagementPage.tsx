@@ -26,24 +26,11 @@ const EmployeeManagementPage = () => {
       employeeData.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employeeData.designation.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const availableEmployees = employeeData.filter(
-    (emp) => !project.members.includes(emp.id)
-  );
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(
-    null
-  );
-  const [newEmployeeName, setNewEmployeeName] = useState("");
-  const [newEmployeeDesignation, setNewEmployeeDesignation] = useState("");
-  const [newEmployeeContact, setNewEmployeeContact] = useState("");
 
   const { user } = useContext(AuthContext); // Get the current user from context
   const userRole = user?.role || ""; // Get user role
   const canEditMembers =
     user && (user.role === "Admin" || project.teamLead === user.id);
-  const projectEmpl =
-    userRole === "Admin"
-      ? employeeData
-      : employeeData.filter((emp) => !project.members.includes(emp.id));
   return (
     <DetailsBox
       showSearchBar={true}
@@ -87,15 +74,14 @@ const EmployeeManagementPage = () => {
         )}
       </HStack>
       <HStack spacing={2} justifyContent="center" mt={4} ml={-6}>
-        {userRole === "Admin" ||
-          (userRole === "TeamLead" && (
-            <Button
-              colorScheme="blue"
-              onClick={() => navigate(`/projects/${title}/employee-detail`)}
-            >
-              View Employee
-            </Button>
-          ))}
+        {(userRole === "Admin" || userRole === "TeamLead") && (
+          <Button
+            colorScheme="blue"
+            onClick={() => navigate(`/projects/${title}/employee-detail`)}
+          >
+            View Employee
+          </Button>
+        )}
         {!canEditMembers && (
           <Text textAlign="center" mt="8" color="gray.500">
             You do not have permission to modify project members.

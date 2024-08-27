@@ -14,7 +14,7 @@ const Homepage = () => {
   return (
     <Grid>
       <GridItem area="main">
-        <ProjectGrid userRole={user.role} />
+        <ProjectGrid />
       </GridItem>
     </Grid>
   );

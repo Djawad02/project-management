@@ -9,6 +9,7 @@ import {
   UnorderedList,
   ListItem,
   HStack,
+  Select,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -23,10 +24,11 @@ const EmployeeDetailPage = () => {
   const [selectedEmployee, setSelectedEmployee] = useState<any | null>(null);
 
   // Handle search and update selectedEmployee
-  const handleSearch = () => {
-    const employee = employeeData.find(
-      (emp) => emp.name.toLowerCase() === searchTerm.toLowerCase()
-    );
+  const handleEmployeeSelect = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const employeeId = parseInt(event.target.value);
+    const employee = employeeData.find((emp) => emp.id === employeeId);
     setSelectedEmployee(employee || null);
   };
 
@@ -40,14 +42,17 @@ const EmployeeDetailPage = () => {
   return (
     <DetailsBox showSearchBar={false} title="Employee Details">
       <Flex direction="column" align="center" justify="center" p={4} gap={4}>
-        <Input
-          placeholder="Enter employee name"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <Button colorScheme="blue" onClick={handleSearch}>
-          Search
-        </Button>
+        <Select
+          placeholder="Select employee"
+          onChange={handleEmployeeSelect}
+          width="300px"
+        >
+          {employeeData.map((employee) => (
+            <option key={employee.id} value={employee.id}>
+              {employee.name}
+            </option>
+          ))}
+        </Select>
 
         {selectedEmployee ? (
           <Flex

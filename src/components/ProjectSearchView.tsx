@@ -11,7 +11,7 @@ interface ProjectSearchViewProps {
   setView: React.Dispatch<React.SetStateAction<"dashboard" | "projectSearch">>;
 }
 
-const ProjectSearchView: React.FC<ProjectSearchViewProps> = ({ setView }) => {
+const ProjectSearchView = ({ setView }: ProjectSearchViewProps) => {
   const { projectList } = useProjects();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);

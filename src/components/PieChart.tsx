@@ -16,7 +16,7 @@ interface PieChartComponentProps {
   data: EmployeeData;
 }
 
-const PieChartComponent: React.FC<PieChartComponentProps> = ({ data }) => {
+const PieChartComponent = ({ data }: PieChartComponentProps) => {
   const chartData = {
     labels: Object.keys(data),
     datasets: [

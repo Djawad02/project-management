@@ -3,14 +3,14 @@ import { Project } from "../interfaces/Project";
 import { Box, Button, Card, CardBody, Heading } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import useUser from "../hooks/useUser";
 
 interface Props {
   project: Project;
-  userRole?: string;
 }
 
-const ProjectCards = ({ project, userRole }: Props) => {
-  const { user } = useContext(AuthContext);
+const ProjectCards = ({ project }: Props) => {
+  const userRol = useUser();
   return (
     <Card
       bg="transparent" // Make the card background transparent
@@ -21,9 +21,9 @@ const ProjectCards = ({ project, userRole }: Props) => {
         <Heading fontSize="2xl">
           <Link to={"/projects/" + project.title}> {project.title}</Link>
         </Heading>
-        {user && (
+        {userRol && (
           <Box mt={4}>
-            {user.role === "Admin" || user.role === "TeamLead" ? (
+            {userRol === "Admin" || userRol === "TeamLead" ? (
               <>
                 <Button
                   as={Link}
@@ -34,7 +34,7 @@ const ProjectCards = ({ project, userRole }: Props) => {
                 >
                   Edit
                 </Button>
-                {user.role === "Admin" && (
+                {userRol === "Admin" && (
                   <Button
                     colorScheme="red"
                     size="sm"

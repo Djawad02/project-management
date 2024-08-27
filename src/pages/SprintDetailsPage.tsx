@@ -18,13 +18,12 @@ import {
 } from "@chakra-ui/react";
 import DetailsBox from "../components/DetailsBox";
 import InputFields from "../components/InputFields"; // Your reusable component
-import { AuthContext } from "../context/AuthContext";
+import useUser from "../hooks/useUser";
 
-const SprintDetailsPage: React.FC = () => {
+const SprintDetailsPage = () => {
   const { title } = useParams<{ title: string }>(); // Extracting title from URL
 
-  const { user } = useContext(AuthContext); // Get the current user from context
-  const userRole = user?.role || ""; // Get user role
+  const userRole = useUser();
 
   const [projectSprints, setProjectSprints] = useState<Sprint[]>([]);
   const [projectDeadlines, setProjectDeadlines] = useState<Deadline[]>([]);

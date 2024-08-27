@@ -13,7 +13,7 @@ interface InputFieldsProps {
   fields: InputField[];
 }
 
-const InputFields: React.FC<InputFieldsProps> = ({ fields }) => {
+const InputFields = ({ fields }: InputFieldsProps) => {
   return (
     <HStack spacing={2} mt={2} align="flex-start" flexWrap="wrap">
       {fields.map((field) => (

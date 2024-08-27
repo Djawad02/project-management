@@ -26,13 +26,13 @@ interface TableComponentProps {
   width: string;
 }
 
-const TableComponent: React.FC<TableComponentProps> = ({
+const TableComponent = ({
   columns,
   data,
   borderColor,
   colorScheme,
   width,
-}) => {
+}: TableComponentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(5);
 

@@ -5,11 +5,12 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { Box, Grid, GridItem, Show } from "@chakra-ui/react";
 import Sidebar from "../components/Sidebar";
 import { AuthContext } from "../context/AuthContext";
+import useUser from "../hooks/useUser";
 
 const Layout = () => {
-  const { user } = useContext(AuthContext);
-  const userRole = user?.role;
+  const user = useUser();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!user) {
       navigate("/login");

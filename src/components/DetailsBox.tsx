@@ -10,14 +10,14 @@ interface DetailsBoxProps {
   children: React.ReactNode;
 }
 
-const DetailsBox: React.FC<DetailsBoxProps> = ({
+const DetailsBox = ({
   title,
   context,
   showSearchBar = false,
   searchTerm,
   onSearchTermChange,
   children,
-}) => {
+}: DetailsBoxProps) => {
   return (
     <Box
       padding="20px"

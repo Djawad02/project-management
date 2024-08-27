@@ -34,9 +34,6 @@ const ProjectDetailPage = () => {
     { header: "Source", accessor: "source" },
   ];
 
-  // Create a single item array for the TableComponent
-  const projectData = [project];
-
   return (
     <DetailsBox title={project.title} context="projectDetails">
       <TableComponent

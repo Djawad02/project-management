@@ -4,14 +4,11 @@ import { Box, Button, SimpleGrid, Text } from "@chakra-ui/react";
 import ProjectCards from "./ProjectCards";
 import ProjectCardContainer from "./ProjectCardContainer";
 import { AuthContext } from "../context/AuthContext";
+import useUser from "../hooks/useUser";
 
-interface ProjectGridProps {
-  userRole: string;
-}
-
-const ProjectGrid = ({ userRole }: ProjectGridProps) => {
+const ProjectGrid = () => {
   const { projectList } = useProjects();
-  const { user } = useContext(AuthContext);
+  const userRole = useUser();
   return (
     <>
       <Box padding="10px">
@@ -32,7 +29,7 @@ const ProjectGrid = ({ userRole }: ProjectGridProps) => {
         >
           {projectList.map((project) => (
             <ProjectCardContainer key={project.id}>
-              <ProjectCards project={project} userRole={userRole} />
+              <ProjectCards project={project} />
             </ProjectCardContainer>
           ))}
         </SimpleGrid>

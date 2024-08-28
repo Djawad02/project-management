@@ -15,7 +15,7 @@ const ProjectTeamPage = () => {
   const navigate = useNavigate();
 
   // Use Zustand's project store
-  const { projectList } = useProjectStore();
+  const { projectList, employeeList } = useProjectStore();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [project, setProject] = useState<Project | undefined>(
@@ -29,14 +29,14 @@ const ProjectTeamPage = () => {
       (p) => p.title === decodeURIComponent(title!)
     );
     setProject(updatedProject);
-    console.log("updated project", updatedProject);
+    // console.log("updated project", updatedProject);
   }, [projectList, title]);
 
   if (!project) {
     return <Text>Project not found</Text>;
   }
 
-  const projectEmployees = employees.filter((e: Employee) =>
+  const projectEmployees = employeeList.filter((e: Employee) =>
     project.members.includes(e.id)
   );
 

@@ -6,15 +6,30 @@ import ProjectCardContainer from "./ProjectCardContainer";
 import { AuthContext } from "../context/AuthContext";
 import useUser from "../hooks/useUser";
 import { useNavigate, useParams } from "react-router-dom";
+import useProjectStore from "../store/useProjectStore";
 
 const ProjectGrid = () => {
   const navigate = useNavigate();
-  const { projectList } = useProjects();
-  const userRole = useUser();
+  const { projectList } = useProjectStore();
+  const user = useUser();
+  const userRole = user?.role;
   const handleNewProject = () => {
     navigate(`new-project`);
   };
+  const filterProjects = () => {
+    if (user?.role === "Admin") {
+      return projectList;
+    }
 
+    if (user?.role === "TeamLead" || user?.role === "Employee") {
+      return projectList.filter((project) =>
+        user.assignedProjects?.includes(project.id)
+      );
+    }
+
+    // Default to an empty array if no role is matched or user is null
+    return [];
+  };
   return (
     <>
       <Box padding="10px">
@@ -33,7 +48,7 @@ const ProjectGrid = () => {
           spacing={3}
           marginTop="40px"
         >
-          {projectList.map((project) => (
+          {filterProjects().map((project) => (
             <ProjectCardContainer key={project.id}>
               <ProjectCards project={project} />
             </ProjectCardContainer>

@@ -13,7 +13,8 @@ const Sidebar = () => {
   const projectBasePath = isProjectPage
     ? location.pathname.split("/").slice(0, 3).join("/")
     : "";
-  const userRole = useUser();
+  const user = useUser();
+  const userRole = user?.role;
   return (
     <VStack
       justifyContent="left"

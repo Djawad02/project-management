@@ -1,6 +1,6 @@
 import { Sprint } from "../interfaces/Sprint";
 
-export const sprints: Sprint[] = [
+const sprints: Sprint[] = [
     { id: 1, projectId: 1, sprintTitle: 'Sprint 1', startDate: '2024-07-01', endDate: '2024-07-15', description: 'Initial setup',status:'In Progress' },
     { id: 2, projectId: 2, sprintTitle: 'Sprint 1', startDate: '2024-07-10', endDate: '2024-08-01', description: 'Feature development' ,status:'Not Started'},
     { id: 3, projectId: 3, sprintTitle: 'Sprint 1', startDate: '2024-08-01', endDate: '2024-08-20', description: 'Backend development',status:'In Progress' },
@@ -17,3 +17,5 @@ export const sprints: Sprint[] = [
     { id: 14, projectId: 14, sprintTitle: 'Sprint 1', startDate: '2024-10-01', endDate: '2024-10-31', description: 'System architecture',status:'Not Started' },
     { id: 15, projectId: 15, sprintTitle: 'Sprint 1', startDate: '2024-07-01', endDate: '2024-07-25', description: 'System setup' ,status:'In Progress'},
   ];
+
+  export default sprints;

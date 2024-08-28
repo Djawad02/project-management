@@ -8,7 +8,7 @@ import employees from "../data/employee";
 
 const RemoveMemberPage = () => {
   const { title } = useParams();
-  const { projectList, updateProjectMembers } = useProjectStore();
+  const { projectList, updateProjectMembers, employeeList } = useProjectStore();
   const navigate = useNavigate();
 
   const project = projectList.find(
@@ -25,7 +25,7 @@ const RemoveMemberPage = () => {
 
   // Fetch only the employees that are members of the project
   const projectMembers = project.members
-    .map((memberId) => employees.find((e: Employee) => e.id === memberId))
+    .map((memberId) => employeeList.find((e: Employee) => e.id === memberId))
     .filter(Boolean) as Employee[];
 
   const handleRemoveMember = () => {
@@ -37,7 +37,7 @@ const RemoveMemberPage = () => {
 
       // Update the project in the Zustand store
       updateProjectMembers(project.id, updatedMembers);
-
+      alert("Member removed from the project");
       // Navigate back to the previous page or confirm removal
       navigate(-1);
     }

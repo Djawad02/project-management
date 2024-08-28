@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { deadlines } from "../data/deadline"; // Ensure correct path
-import projects from "../data/projects"; // Ensure correct path
-import { sprints } from "../data/sprint"; // Ensure correct path
+import deadlines from "../data/deadline"; // Ensure correct path
+import sprints from "../data/sprint"; // Ensure correct path
 import { Deadline } from "../interfaces/Deadline";
 import { Sprint } from "../interfaces/Sprint";
 import {
@@ -19,12 +18,13 @@ import {
 import DetailsBox from "../components/DetailsBox";
 import InputFields from "../components/InputFields"; // Your reusable component
 import useUser from "../hooks/useUser";
+import useProjectStore from "../store/useProjectStore";
 
 const SprintDetailsPage = () => {
   const { title } = useParams<{ title: string }>(); // Extracting title from URL
 
-  const userRole = useUser();
-
+  const user = useUser();
+  const userRole = user?.role;
   const [projectSprints, setProjectSprints] = useState<Sprint[]>([]);
   const [projectDeadlines, setProjectDeadlines] = useState<Deadline[]>([]);
   const [isAddingSprint, setIsAddingSprint] = useState(false);
@@ -32,6 +32,12 @@ const SprintDetailsPage = () => {
   const [isEditingSprint, setIsEditingSprint] = useState<boolean | number>(
     false
   ); // Added editing state
+  const [isAddingDeadline, setIsAddingDeadline] = useState(false);
+  const [newDeadline, setNewDeadline] = useState<Deadline>({
+    projectId: 0, // Set this after matching the project
+    deadlineDate: "", // Assuming this is the date format
+    description: "",
+  });
   const [newSprint, setNewSprint] = useState<Sprint>({
     id: 0, // Temporary ID, generate a unique one later
     projectId: 0, // Set after matching the project
@@ -41,11 +47,11 @@ const SprintDetailsPage = () => {
     description: "",
     status: "",
   });
-
+  const { projectList } = useProjectStore();
   useEffect(() => {
     if (title) {
       const decodedTitle = decodeURIComponent(title);
-      const matchedProject = projects.find(
+      const matchedProject = projectList.find(
         (project) => project.title === decodedTitle
       );
 
@@ -62,6 +68,10 @@ const SprintDetailsPage = () => {
         // Initialize new sprint's projectId with matched project id
         setNewSprint((prevSprint) => ({
           ...prevSprint,
+          projectId: matchedProject.id,
+        }));
+        setNewDeadline((prevDeadline) => ({
+          ...prevDeadline,
           projectId: matchedProject.id,
         }));
       }
@@ -121,9 +131,41 @@ const SprintDetailsPage = () => {
       });
       setIsAddingSprint(false);
       setIsEditingSprint(false);
+    } else {
+      alert("Please fill all fields");
     }
   };
+  const handleAddDeadline = () => {
+    setIsAddingDeadline(true);
+  };
 
+  const handleSaveDeadline = () => {
+    if (newDeadline.deadlineDate && newDeadline.description) {
+      const newDeadlineWithId = {
+        ...newDeadline,
+        id: projectDeadlines.length
+          ? Math.max(
+              ...projectDeadlines.map((deadline) => deadline.projectId)
+            ) + 1
+          : 1,
+      };
+
+      setProjectDeadlines((prevDeadlines) => [
+        ...prevDeadlines,
+        newDeadlineWithId,
+      ]);
+
+      setNewDeadline({
+        projectId: newDeadline.projectId,
+        deadlineDate: "",
+        description: "",
+      });
+
+      setIsAddingDeadline(false);
+    } else {
+      alert("Please fill all fields");
+    }
+  };
   return (
     <div>
       <DetailsBox showSearchBar={false} title="Sprint Details">
@@ -265,7 +307,48 @@ const SprintDetailsPage = () => {
         )}
 
         {showDeadlines && projectDeadlines.length === 0 && (
-          <p>No deadlines available for this project.</p>
+          <>
+            <p>No deadlines available for this project.</p>
+            {(userRole === "Admin" || userRole === "TeamLead") && (
+              <Button mt={2} colorScheme="blue" onClick={handleAddDeadline}>
+                Add Deadline
+              </Button>
+            )}
+          </>
+        )}
+        {isAddingDeadline && (
+          <InputFields
+            fields={[
+              {
+                id: "deadline-date",
+                label: "Deadline Date",
+                placeholder: "Enter deadline date",
+                value: newDeadline.deadlineDate,
+                onChange: (e) =>
+                  setNewDeadline({
+                    ...newDeadline,
+                    deadlineDate: e.target.value,
+                  }),
+              },
+              {
+                id: "deadline-description",
+                label: "Description",
+                placeholder: "Enter description",
+                value: newDeadline.description,
+                onChange: (e) =>
+                  setNewDeadline({
+                    ...newDeadline,
+                    description: e.target.value,
+                  }),
+              },
+            ]}
+          />
+        )}
+
+        {isAddingDeadline && (
+          <Button mt={2} colorScheme="green" onClick={handleSaveDeadline}>
+            Save Deadline
+          </Button>
         )}
       </DetailsBox>
     </div>

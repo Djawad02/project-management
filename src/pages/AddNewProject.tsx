@@ -9,10 +9,11 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Project } from "../interfaces/Project";
-import { useProject } from "../context/ProjectContext";
-
+import useProjectStore from "../store/useProjectStore";
+import { useNavigate } from "react-router-dom";
 const AddNewProject = () => {
-  const { addProject } = useProject();
+  const addProject = useProjectStore((state) => state.addProject);
+  const navigate = useNavigate();
   const [newProject, setNewProject] = useState<Project>({
     id: 0,
     title: "",
@@ -64,6 +65,7 @@ const AddNewProject = () => {
       deadlines: [],
       sprints: [],
     });
+    navigate("/");
   };
 
   return (
@@ -106,16 +108,6 @@ const AddNewProject = () => {
             value={newProject.source}
             onChange={handleInputChange}
             placeholder="Enter source"
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Team Lead</FormLabel>
-          <Input
-            type="number"
-            name="teamLead"
-            value={newProject.teamLead || ""}
-            onChange={handleInputChange}
-            placeholder="Enter team lead ID"
           />
         </FormControl>
         <Button colorScheme="blue" mb={4} onClick={handleAddProject}>

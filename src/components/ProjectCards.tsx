@@ -1,16 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Project } from "../interfaces/Project";
 import { Box, Button, Card, CardBody, Heading } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import useUser from "../hooks/useUser";
+import useProjectStore from "../store/useProjectStore";
 
 interface Props {
   project: Project;
 }
 
 const ProjectCards = ({ project }: Props) => {
-  const userRol = useUser();
+  const user = useUser();
+  const userRol = user?.role;
+  const { removeProject } = useProjectStore();
+  const handleRemoveProject = (projectId: number) => {
+    if (projectId !== null) {
+      // Remove the project from the Zustand store
+      removeProject(projectId);
+      alert("Project removed successfully");
+    }
+  };
+
   return (
     <Card
       bg="transparent" // Make the card background transparent
@@ -40,7 +51,7 @@ const ProjectCards = ({ project }: Props) => {
                     size="sm"
                     onClick={() => {
                       // Add logic for deleting project
-                      alert("Delete action not implemented yet");
+                      handleRemoveProject(project.id);
                     }}
                   >
                     Delete

@@ -6,6 +6,7 @@ import DetailsBox from "./DetailsBox";
 import { useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import { Center, Text } from "@chakra-ui/react";
+import useProjectStore from "../store/useProjectStore";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface EmployeeData {
@@ -29,7 +30,7 @@ const PieChartComponent = ({ data }: PieChartComponentProps) => {
   };
 
   const { title } = useParams();
-  const { projectList } = useProjects();
+  const { projectList } = useProjectStore();
 
   const project = projectList.find(
     (p) => p.title === decodeURIComponent(title!)

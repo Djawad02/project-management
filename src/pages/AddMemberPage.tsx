@@ -9,9 +9,8 @@ const AddMemberPage = () => {
   const { title } = useParams();
   const navigate = useNavigate();
 
-  // Use Zustand's store instead of the useProjects hook
-  const { projectList, updateProjectMembers } = useProjectStore();
-  console.log("Current Project List:", projectList);
+  const { projectList, updateProjectMembers, employeeList } = useProjectStore();
+  // console.log("Current Project List:", projectList);
 
   const project = projectList.find(
     (p) => p.title === decodeURIComponent(title!)
@@ -28,7 +27,7 @@ const AddMemberPage = () => {
   console.log("Current Project:", project);
 
   // Filter out employees who are already part of the project
-  const availableEmployees = employeeData.filter(
+  const availableEmployees = employeeList.filter(
     (emp) => !project.members.includes(emp.id)
   );
 

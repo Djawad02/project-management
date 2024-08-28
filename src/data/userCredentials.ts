@@ -12,14 +12,14 @@ export const users: User[] = [
       username: 'leadUser',
       password: 'lead',
       role: 'TeamLead',
-      assignedProjects: [1, 2], // Example project IDs
+      assignedProjects: [1, 7,11,13,14],
     },
     {
       id: 2,
       username: 'dania',
       password: 'dania',
       role: 'Employee',
-      assignedProjects: [1],
+      assignedProjects: [1,2,4,10,12,13,14,15],
     },
   ];
   

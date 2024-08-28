@@ -1,6 +1,5 @@
 import { Deadline } from "../interfaces/Deadline";
-
-export const deadlines: Deadline[] = [
+ const deadlines: Deadline[] = [
     { projectId: 1, deadlineDate: '2024-09-30', description: 'Initial release' },
     { projectId: 2, deadlineDate: '2024-08-15', description: 'Go live' },
     { projectId: 3, deadlineDate: '2024-10-10', description: 'Feature complete' },
@@ -17,3 +16,5 @@ export const deadlines: Deadline[] = [
     { projectId: 14, deadlineDate: '2024-11-30', description: 'System deployment' },
     { projectId: 15, deadlineDate: '2024-08-20', description: 'Final review' },
   ];
+
+  export default deadlines

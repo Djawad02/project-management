@@ -7,10 +7,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import employeeData from "../data/employee";
 import { AuthContext } from "../context/AuthContext";
+import useProjectStore from "../store/useProjectStore";
 const EmployeeManagementPage = () => {
   const navigate = useNavigate();
   const { title } = useParams();
-  const { projectList } = useProjects();
+  const { projectList, employeeList } = useProjectStore();
   const project = projectList.find(
     (p) => p.title === decodeURIComponent(title!)
   );
@@ -21,10 +22,10 @@ const EmployeeManagementPage = () => {
     return <Text>Project not found</Text>;
   }
 
-  const filteredEmployees = employeeData.filter(
-    (employeeData) =>
-      employeeData.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      employeeData.designation.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredEmployees = employeeList.filter(
+    (employeeList) =>
+      employeeList.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employeeList.designation.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const { user } = useContext(AuthContext); // Get the current user from context
@@ -75,7 +76,7 @@ const EmployeeManagementPage = () => {
           </>
         )}
       </HStack>
-      <HStack spacing={2} justifyContent="center" mt={4} ml={-6}>
+      <HStack spacing={2} justifyContent="center" mt={4} mb={2} ml={-6}>
         {(userRole === "Admin" || userRole === "TeamLead") && (
           <Button
             colorScheme="blue"

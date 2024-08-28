@@ -26,6 +26,7 @@ const RemoveEmployeeOrganization = () => {
       // updateEmployeeList(employeeData); // Uncomment if using state management or backend
 
       // Navigate back to the previous page or confirm removal
+      alert("Member removed from the organization");
       navigate(-1);
     }
   };

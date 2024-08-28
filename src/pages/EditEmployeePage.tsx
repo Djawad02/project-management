@@ -12,12 +12,12 @@ import DetailsBox from "../components/DetailsBox";
 import InputFields from "../components/InputFields";
 import { Employee } from "../interfaces/Employee";
 import employees from "../data/employee";
+import useProjectStore from "../store/useProjectStore";
 
 const EditEmployeePage = () => {
   const { title } = useParams();
-  const { employeeId } = useParams<{ employeeId: string }>();
   const navigate = useNavigate();
-
+  const { employeeList, editMemberToProject } = useProjectStore();
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(
     null
   );
@@ -70,6 +70,7 @@ const EditEmployeePage = () => {
   const handleUpdateEmployee = () => {
     if (employee) {
       console.log("Updated Employee:", employee);
+      editMemberToProject(employee.id, employee);
       // Update logic here (e.g., update in state or API call)
       navigate(`/projects/${title}/employee-management`);
     }
@@ -85,7 +86,7 @@ const EditEmployeePage = () => {
             onChange={handleEmployeeChange}
             value={selectedEmployeeId ?? ""}
           >
-            {employees.map((emp) => (
+            {employeeList.map((emp) => (
               <option key={emp.id} value={emp.id}>
                 {emp.name} - {emp.designation}
               </option>

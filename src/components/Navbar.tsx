@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  console.log("Current user:", user); // Debugging log
 
   const handleLogout = () => {
     if (logout) {

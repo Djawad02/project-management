@@ -27,6 +27,7 @@ const LoginPage: React.FC = () => {
 
     if (user) {
       login(user);
+      alert("Login Successful");
       navigate("/"); // Redirect to projects page after login
       console.log(user);
     } else {

@@ -1,7 +1,7 @@
 // src/pages/AddNewEmployeeOrganization.tsx
-import { Button, Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import employeeData from "../data/employee";
 import DetailsBox from "../components/DetailsBox";
@@ -13,6 +13,8 @@ const AddNewEmployeeOrganization = () => {
   const project = projectList.find(
     (p) => p.title === decodeURIComponent(title!)
   );
+
+  const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [newEmployeeName, setNewEmployeeName] = useState("");
@@ -36,9 +38,11 @@ const AddNewEmployeeOrganization = () => {
       };
 
       employeeData.push(newEmployee);
+      alert("Employee added!");
       setNewEmployeeName("");
       setNewEmployeeDesignation("");
       setNewEmployeeContact("");
+      navigate(`/projects/${title}/employee-management`);
     }
   };
 
@@ -76,9 +80,11 @@ const AddNewEmployeeOrganization = () => {
           },
         ]}
       />
-      <Button colorScheme="blue" onClick={handleAddNewEmployee}>
-        Add
-      </Button>
+      <Box mt={3} ml={330}>
+        <Button colorScheme="blue" onClick={handleAddNewEmployee}>
+          Add
+        </Button>
+      </Box>
     </DetailsBox>
   );
 };

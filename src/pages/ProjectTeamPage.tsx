@@ -1,47 +1,51 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import useProjects from "../hooks/useProjects";
-import employees from "../data/employee"; // Import Employee interface
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import employees from "../data/employee";
 import { HStack, Button, Text } from "@chakra-ui/react";
 import TableComponent from "../components/TableComponent";
 import DetailsBox from "../components/DetailsBox";
 import employeeColumns from "../data/employeeColumns";
 import { Employee } from "../interfaces/Employee";
 import { AuthContext } from "../context/AuthContext";
+import { Project } from "../interfaces/Project";
+import useProjectStore from "../store/useProjectStore";
 
 const ProjectTeamPage = () => {
   const { title } = useParams();
-  const { projectList } = useProjects();
   const navigate = useNavigate();
+
+  // Use Zustand's project store
+  const { projectList } = useProjectStore();
+
   const [searchTerm, setSearchTerm] = useState("");
-  const [project, setProject] = useState(() =>
+  const [project, setProject] = useState<Project | undefined>(
     projectList.find((p) => p.title === decodeURIComponent(title!))
   );
 
-  const { user } = useContext(AuthContext);
+  const { user } = React.useContext(AuthContext);
 
   useEffect(() => {
     const updatedProject = projectList.find(
       (p) => p.title === decodeURIComponent(title!)
     );
     setProject(updatedProject);
+    console.log("updated project", updatedProject);
   }, [projectList, title]);
 
   if (!project) {
     return <Text>Project not found</Text>;
   }
 
-  // Filter employees based on project member IDs
   const projectEmployees = employees.filter((e: Employee) =>
-    (project.members as number[]).includes(e.id)
+    project.members.includes(e.id)
   );
 
-  // Filter employees based on search term
   const filteredEmployees = projectEmployees.filter(
     (employee: Employee) =>
       employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.designation.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
   const canEditMembers =
     user && (user.role === "Admin" || project.teamLead === user.id);
 

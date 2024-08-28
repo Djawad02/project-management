@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Select, Button, VStack, Text, Input, HStack } from "@chakra-ui/react";
-import useProjects from "../hooks/useProjects";
+import { Select, Button, VStack, Text } from "@chakra-ui/react"; // Import Zustand store
 import employeeData from "../data/employee"; // Assuming you have a separate file for employee data
 import DetailsBox from "../components/DetailsBox";
+import useProjectStore from "../store/useProjectStore";
 
 const AddMemberPage = () => {
   const { title } = useParams();
-  const { projectList, updateProjectMembers } = useProjects();
   const navigate = useNavigate();
+
+  // Use Zustand's store instead of the useProjects hook
+  const { projectList, updateProjectMembers } = useProjectStore();
+  console.log("Current Project List:", projectList);
+
   const project = projectList.find(
     (p) => p.title === decodeURIComponent(title!)
   );
@@ -21,6 +25,8 @@ const AddMemberPage = () => {
     return <Text>Project not found</Text>;
   }
 
+  console.log("Current Project:", project);
+
   // Filter out employees who are already part of the project
   const availableEmployees = employeeData.filter(
     (emp) => !project.members.includes(emp.id)
@@ -28,12 +34,13 @@ const AddMemberPage = () => {
 
   const handleAddMember = () => {
     if (
+      project &&
       selectedEmployeeId !== null &&
       !project.members.includes(selectedEmployeeId)
     ) {
       const updatedMembers = [...project.members, selectedEmployeeId];
       updateProjectMembers(project.id, updatedMembers);
-      navigate(-1);
+      navigate(-1); // Navigate back after updating members
     }
   };
 

@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { Button, Box, Text } from "@chakra-ui/react";
-import employees from "../data/employee";
-import projects from "../data/projects";
 import TableComponent from "../components/TableComponent";
 import employeeColumns from "../data/employeeColumns";
+import useProjectStore from "../store/useProjectStore";
+import { Box, Button, Text } from "@chakra-ui/react";
 
 const ResourceManagementPage = () => {
   const [view, setView] = useState<"assigned" | "free">("assigned");
 
+  // Access projects and employees from Zustand store
+  const { projectList, employeeList } = useProjectStore();
+
   // Function to get employees assigned to a project with project names
   const getAssignedEmployeesWithProjects = () => {
-    return employees
+    return employeeList
       .map((employee) => {
-        const employeeProjects = projects
+        const employeeProjects = projectList
           .filter((project) => project.members.includes(employee.id))
           .map((project) => project.title);
 
@@ -28,19 +30,15 @@ const ResourceManagementPage = () => {
   // Function to get employees not assigned to any project
   const getFreeEmployees = () => {
     const assignedEmployeeIds = new Set(
-      projects.flatMap((project) => project.members)
+      projectList.flatMap((project) => project.members)
     );
-    return employees.filter(
+    return employeeList.filter(
       (employee) => !assignedEmployeeIds.has(employee.id)
     );
   };
 
   const assignedEmployees = getAssignedEmployeesWithProjects();
   const freeEmployees = getFreeEmployees();
-
-  // Log data for debugging
-  console.log("Assigned Employees:", assignedEmployees);
-  console.log("Free Employees:", freeEmployees);
 
   return (
     <Box>

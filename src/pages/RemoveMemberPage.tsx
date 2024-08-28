@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Select, Button, VStack, Text } from "@chakra-ui/react";
-import useProjects from "../hooks/useProjects";
-import employee from "../data/employee";
+import useProjectStore from "../store/useProjectStore"; // Corrected import path
 import DetailsBox from "../components/DetailsBox";
-import employees from "../data/employee";
 import { Employee } from "../interfaces/Employee";
+import employees from "../data/employee";
 
 const RemoveMemberPage = () => {
   const { title } = useParams();
-  const { projectList, updateProjectMembers } = useProjects();
+  const { projectList, updateProjectMembers } = useProjectStore();
   const navigate = useNavigate();
 
   const project = projectList.find(
@@ -25,25 +24,19 @@ const RemoveMemberPage = () => {
   }
 
   // Fetch only the employees that are members of the project
-  const projectMembers = employees.filter((e: Employee) =>
-    (project.members as number[]).includes(e.id)
-  );
+  const projectMembers = project.members
+    .map((memberId) => employees.find((e: Employee) => e.id === memberId))
+    .filter(Boolean) as Employee[];
 
   const handleRemoveMember = () => {
     if (selectedEmployeeId !== null) {
-      // Find index of the employee in the organization list
-      const employeeIndex = employee.findIndex(
-        (emp) => emp.id === selectedEmployeeId
+      // Remove the employee from the project's members array
+      const updatedMembers = project.members.filter(
+        (id) => id !== selectedEmployeeId
       );
 
-      // Remove the employee from the organization list
-      if (employeeIndex > -1) {
-        employee.splice(employeeIndex, 1); // Remove the employee from the array
-      }
-
-      // Update any state or perform actions needed after removing an employee
-      // For example, you might want to update the backend or state management
-      // updateEmployeeList(employeeData); // Uncomment if using state management or backend
+      // Update the project in the Zustand store
+      updateProjectMembers(project.id, updatedMembers);
 
       // Navigate back to the previous page or confirm removal
       navigate(-1);

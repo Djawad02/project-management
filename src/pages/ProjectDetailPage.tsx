@@ -5,10 +5,11 @@ import { Button, HStack, Text } from "@chakra-ui/react";
 import TableComponent from "../components/TableComponent";
 import employees from "../data/employee"; // Assuming you have a projects array
 import DetailsBox from "../components/DetailsBox";
+import useProjectStore from "../store/useProjectStore";
 
 const ProjectDetailPage = () => {
   const { title } = useParams();
-  const { projectList } = useProjects();
+  const { projectList } = useProjectStore();
   const navigate = useNavigate();
 
   const project = projectList.find(

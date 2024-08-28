@@ -6,13 +6,14 @@ import employees from "../data/employee";
 import { aggregateDesignations } from "../chartsFunctions/DesignationRatioFunction";
 import { aggregateProjectDesignations } from "../chartsFunctions/SpecificProjectRatioFunction";
 import { Project } from "../interfaces/Project";
+import useProjectStore from "../store/useProjectStore";
 
 interface ProjectSearchViewProps {
   setView: React.Dispatch<React.SetStateAction<"dashboard" | "projectSearch">>;
 }
 
 const ProjectSearchView = ({ setView }: ProjectSearchViewProps) => {
-  const { projectList } = useProjects();
+  const { projectList } = useProjectStore();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 

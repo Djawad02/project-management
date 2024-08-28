@@ -17,6 +17,7 @@ import employeeData from "../data/employee";
 import projectData from "../data/projects"; // Assuming project data is available
 import DetailsBox from "../components/DetailsBox";
 import employeeImage from "../assets/employeeImage.png";
+import useProjectStore from "../store/useProjectStore";
 
 const EmployeeDetailPage = () => {
   const { projectTitle } = useParams<{ projectTitle: string }>();
@@ -31,10 +32,10 @@ const EmployeeDetailPage = () => {
     const employee = employeeData.find((emp) => emp.id === employeeId);
     setSelectedEmployee(employee || null);
   };
-
+  const { projectList } = useProjectStore();
   // Fetch projects for the selected employee
   const getEmployeeProjects = (employeeId: number) => {
-    return projectData.filter((project) =>
+    return projectList.filter((project) =>
       project.members.includes(employeeId)
     );
   };

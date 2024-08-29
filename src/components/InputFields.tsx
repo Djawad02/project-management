@@ -6,8 +6,9 @@ interface InputField {
   name?: string;
   label: string;
   placeholder: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  component?: React.ReactNode;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface InputFieldsProps {
@@ -20,13 +21,17 @@ const InputFields = ({ fields }: InputFieldsProps) => {
       {fields.map((field) => (
         <FormControl key={field.id}>
           <FormLabel htmlFor={field.id}>{field.label}</FormLabel>
-          <Input
-            id={field.id}
-            name={field.id}
-            placeholder={field.placeholder}
-            value={field.value}
-            onChange={field.onChange}
-          />
+          {field.component ? (
+            field.component
+          ) : (
+            <Input
+              id={field.id}
+              name={field.name || field.id}
+              placeholder={field.placeholder}
+              value={field.value || ""}
+              onChange={field.onChange}
+            />
+          )}
         </FormControl>
       ))}
     </HStack>

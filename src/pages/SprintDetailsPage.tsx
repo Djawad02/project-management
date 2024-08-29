@@ -19,6 +19,8 @@ import DetailsBox from "../components/DetailsBox";
 import InputFields from "../components/InputFields"; // Your reusable component
 import useUser from "../hooks/useUser";
 import useProjectStore from "../store/useProjectStore";
+import DatePicker from "react-datepicker";
+import DatePickerComponent from "../components/DatePickerComponent";
 
 const SprintDetailsPage = () => {
   const { title } = useParams<{ title: string }>(); // Extracting title from URL
@@ -234,20 +236,39 @@ const SprintDetailsPage = () => {
                       }),
                   },
                   {
-                    id: "sprint-start-date",
-                    label: "Start Date",
-                    placeholder: "Enter start date",
-                    value: newSprint.startDate,
-                    onChange: (e) =>
-                      setNewSprint({ ...newSprint, startDate: e.target.value }),
-                  },
-                  {
-                    id: "sprint-end-date",
-                    label: "End Date",
-                    placeholder: "Enter end date",
-                    value: newSprint.endDate,
-                    onChange: (e) =>
-                      setNewSprint({ ...newSprint, endDate: e.target.value }),
+                    id: "sprint-date-range",
+                    label: "Date Range",
+                    placeholder: "Enter date range",
+                    component: (
+                      <DatePickerComponent
+                        startDate={
+                          newSprint.startDate
+                            ? new Date(newSprint.startDate)
+                            : undefined
+                        }
+                        endDate={
+                          newSprint.endDate
+                            ? new Date(newSprint.endDate)
+                            : undefined
+                        }
+                        onChange={(dates: [Date | null, Date | null]) => {
+                          const [startDate, endDate] = dates;
+
+                          setNewSprint({
+                            ...newSprint,
+                            startDate: startDate
+                              ? startDate.toISOString().split("T")[0]
+                              : "", // Assigning empty string if null
+                            endDate: endDate
+                              ? endDate.toISOString().split("T")[0]
+                              : "", // Assigning empty string if null
+                          });
+                        }}
+                        selectsRange
+                        dateFormat="yyyy-MM-dd"
+                        placeholderText="Enter date range"
+                      />
+                    ),
                   },
                   {
                     id: "sprint-description",

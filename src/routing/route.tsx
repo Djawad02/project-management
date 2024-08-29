@@ -16,6 +16,7 @@ import RemoveEmployeeOrganization from "../pages/RemoveEmployeeOrganization";
 import EmployeeDetailPage from "../pages/EmployeeDetailPage";
 import AddNewProject from "../pages/AddNewProject";
 import EditMemberPage from "../pages/EditEmployeePage";
+import EditProjectPage from "../pages/EditProjectPage";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
             path: "employee-detail",
             element: <EmployeeDetailPage />,
           },
+          { path: "edit-project", element: <EditProjectPage /> },
         ],
       },
     ],

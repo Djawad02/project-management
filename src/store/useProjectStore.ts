@@ -21,6 +21,7 @@ interface ProjectStore {
     addMemberToProject: (projectId:number,memberId:number) => void
     addProject: (project: Project) => void;
     removeProject: (projectId: number) => void;
+    updateProject:(project: Project) => void
     addSprint: (sprint: Sprint) => void;
     updateSprint: (sprintId: number, updatedSprint: Sprint) => void;
     removeSprint: (sprintId: number) => void;
@@ -78,6 +79,13 @@ const useProjectStore = create<ProjectStore>((set) => ({
       set((state) => ({
         projectList: state.projectList.filter((project) => project.id !== projectId),
     }));
+    },
+    updateProject: (project:Project) =>{
+      set((state) => ({
+        projectList: state.projectList.map((pr) =>
+          pr.id === project.id ? { ...pr, ...project } : pr
+        ),
+      }));
     },
      addSprint: (sprint) => {
       set((state) => ({

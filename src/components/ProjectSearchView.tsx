@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Input, Box, Text } from "@chakra-ui/react";
+import React, { useContext, useState } from "react";
+import { Button, Input, Box, Text, Select, HStack } from "@chakra-ui/react";
 import PieChartComponent from "./PieChart";
 import useProjects from "../hooks/useProjects";
 import employees from "../data/employee";
@@ -7,60 +7,82 @@ import { aggregateDesignations } from "../chartsFunctions/DesignationRatioFuncti
 import { aggregateProjectDesignations } from "../chartsFunctions/SpecificProjectRatioFunction";
 import { Project } from "../interfaces/Project";
 import useProjectStore from "../store/useProjectStore";
+import DetailsBox from "./DetailsBox";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import useUser from "../hooks/useUser";
 
 interface ProjectSearchViewProps {
   setView: React.Dispatch<React.SetStateAction<"dashboard" | "projectSearch">>;
 }
 
 const ProjectSearchView = ({ setView }: ProjectSearchViewProps) => {
-  const { projectList } = useProjectStore();
-  const [searchTerm, setSearchTerm] = useState("");
+  const { projectList, employeeList } = useProjectStore();
+  const navigate = useNavigate();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const user = useUser();
+  const userRole = user?.role;
+  const filterProjects = () => {
+    if (user?.role === "Admin") {
+      return projectList;
+    }
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+    if (user?.role === "TeamLead" || user?.role === "Employee") {
+      return projectList.filter((project) =>
+        user.assignedProjects?.includes(project.id)
+      );
+    }
+
+    // Default to an empty array if no role is matched or user is null
+    return [];
   };
 
-  const handleProjectSelect = (project: Project) => {
-    setSelectedProject(project);
+  const specificProjects = filterProjects();
+
+  const handleProjectSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const projectId = e.target.value;
+    const project = projectList.find((p) => p.id.toString() === projectId);
+    setSelectedProject(project || null);
   };
 
   const handleBackToDashboard = () => {
     setView("dashboard");
   };
 
-  return (
-    <Box>
-      <Button colorScheme="blue" onClick={handleBackToDashboard}>
-        Back to Dashboard
-      </Button>
-      <Input
-        placeholder="Search for a project"
-        value={searchTerm}
-        onChange={handleSearchChange}
-        my={4}
-      />
-      <Box>
-        {projectList
-          .filter((project) =>
-            project.title.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-          .map((project) => (
-            <Box
-              key={project.id}
-              onClick={() => handleProjectSelect(project)}
-              p={4}
-              borderWidth="1px"
-              borderRadius="md"
-              mb={2}
-              cursor="pointer"
-              _hover={{ bg: "gray.100" }}
-            >
-              <Text>{project.title}</Text>
-            </Box>
-          ))}
-      </Box>
+  const handleSpecificProjectDetails = () => {
+    if (selectedProject)
+      navigate(
+        `/projects/${encodeURIComponent(
+          selectedProject.title
+        )}/dashboard/specific-project`
+      );
+    else alert("Please select a project");
+  };
 
+  return (
+    <DetailsBox
+      showSearchBar={false}
+      title="Per Project Employee Designation Ratio"
+    >
+      <HStack justify="space-between">
+        <Button colorScheme="blue" onClick={handleBackToDashboard}>
+          Back to Dashboard
+        </Button>
+        <Button colorScheme="blue" onClick={handleSpecificProjectDetails}>
+          View Project Details
+        </Button>
+      </HStack>
+      <Select
+        mt={5}
+        placeholder="Select a project"
+        onChange={handleProjectSelect}
+      >
+        {specificProjects.map((project) => (
+          <option key={project.id} value={project.id}>
+            {project.title}
+          </option>
+        ))}
+      </Select>
       {selectedProject && (
         <Box mt={4}>
           <Text fontSize="xl" mb={2}>
@@ -71,7 +93,7 @@ const ProjectSearchView = ({ setView }: ProjectSearchViewProps) => {
           />
         </Box>
       )}
-    </Box>
+    </DetailsBox>
   );
 };
 

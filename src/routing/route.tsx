@@ -17,6 +17,7 @@ import EmployeeDetailPage from "../pages/EmployeeDetailPage";
 import AddNewProject from "../pages/AddNewProject";
 import EditMemberPage from "../pages/EditEmployeePage";
 import EditProjectPage from "../pages/EditProjectPage";
+import SpecificProjectDetailsPage from "../pages/SpecificProjectDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
             element: <EmployeeDetailPage />,
           },
           { path: "edit-project", element: <EditProjectPage /> },
+          {
+            path: "dashboard/specific-project",
+            element: <SpecificProjectDetailsPage />,
+          },
         ],
       },
     ],

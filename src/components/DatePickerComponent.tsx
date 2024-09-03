@@ -19,6 +19,11 @@ const DatePickerComponent = ({
   dateFormat = "yyyy-MM-dd",
   placeholderText = "",
 }: DatePickerComponentProps) => {
+  const isWeekday = (date: Date) => {
+    const day = date.getDay();
+    return day !== 0 && day !== 6;
+  };
+
   return (
     <DatePicker
       selected={startDate ?? null}
@@ -28,7 +33,7 @@ const DatePickerComponent = ({
       selectsRange={selectsRange as true} // Boolean is fine
       dateFormat={dateFormat}
       placeholderText={placeholderText}
-      inline
+      filterDate={isWeekday}
     />
   );
 };

@@ -1,3 +1,5 @@
+import { Task } from "./Task";
+
 export interface Sprint {
     id: number;
     projectId: number;
@@ -6,4 +8,5 @@ export interface Sprint {
     endDate: string; // ISO date string
     description: string;
     status: string;
+    task:Task[]
   }

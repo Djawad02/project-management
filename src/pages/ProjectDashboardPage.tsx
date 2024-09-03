@@ -6,12 +6,13 @@ import { Button } from "@chakra-ui/react";
 import DetailsBox from "../components/DetailsBox";
 import ProjectSearchView from "../components/ProjectSearchView";
 import { AuthContext } from "../context/AuthContext";
+import useUser from "../hooks/useUser";
 
 const ProjectDashboardPage = () => {
   const designationData = aggregateDesignations(employees);
   const [view, setView] = useState<"dashboard" | "projectSearch">("dashboard"); // State to manage the current view
-  const { user } = useContext(AuthContext); // Get the current user from context
-  const userRole = user?.role || ""; // Get user role
+  const user = useUser();
+  const userRole = user?.role;
   // Function to handle button click
   const handleViewProjectResources = () => {
     setView("projectSearch"); // Update state to show project search view

@@ -30,6 +30,7 @@ const SprintList = ({
 
   const taskColumns = [
     { header: "Task Title", accessor: "title" },
+    { header: "Description", accessor: "description" },
     { header: "Frontend Hours", accessor: "frontend" },
     { header: "Backend Hours", accessor: "backend" },
     { header: "QA Hours", accessor: "qa" },
@@ -42,6 +43,7 @@ const SprintList = ({
       frontend: task.resources.frontend,
       backend: task.resources.backend,
       qa: task.resources.qa,
+      description: task.description,
     }));
   };
 
@@ -70,14 +72,11 @@ const SprintList = ({
             <Button colorScheme="red" onClick={() => onRemove(sprint.id)}>
               Remove Sprint
             </Button>
-            <Button
-              colorScheme="teal"
-              onClick={() => handleToggleTasks(sprint.id)}
-            >
-              {expandedSprintId === sprint.id ? "Hide Tasks" : "View Tasks"}
-            </Button>
           </>
         )}
+        <Button colorScheme="teal" onClick={() => handleToggleTasks(sprint.id)}>
+          {expandedSprintId === sprint.id ? "Hide Tasks" : "View Tasks"}
+        </Button>
       </HStack>
     ),
   }));

@@ -13,6 +13,3 @@ export interface Project {
     sprints?: Sprint[]; 
 }
 
-export interface ProjectDetailsProps {
-    projects: Project[];
-  }

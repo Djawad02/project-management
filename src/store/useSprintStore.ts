@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { Sprint } from "../interfaces/Sprint";
 import { Task } from "../interfaces/Task";
 import initialSprintList from "../data/sprint"
+import initialTaskList from "../data/task";
 interface SprintStore {
     sprints: Sprint[];
     selectedSprintId: number | null;
@@ -16,6 +17,7 @@ interface SprintStore {
 
 const useSprintStore = create<SprintStore>((set) =>({
     sprints:initialSprintList,
+    tasks:initialTaskList,
     selectedSprintId: null,
     setSelectedSprintId: (id) => set({ selectedSprintId: id }),
     addSprint: (sprint) => set((state) => ({

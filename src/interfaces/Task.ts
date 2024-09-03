@@ -7,4 +7,5 @@
       qa: number;
     };
     status:string;
+    description:string;
   }

@@ -17,17 +17,20 @@ const ProjectGrid = () => {
     navigate(`new-project`);
   };
   const filterProjects = () => {
-    if (user?.role === "Admin") {
+    if (userRole === "Admin") {
       return projectList;
     }
 
-    if (user?.role === "TeamLead" || user?.role === "Employee") {
-      return projectList.filter((project) =>
-        user.assignedProjects?.includes(project.id)
-      );
+    if (userRole === "TeamLead" || userRole === "Employee") {
+      return projectList.filter((project) => {
+        if (user) {
+          const isTeamLead = project.teamLead === user.id;
+          const isMember = project.members.includes(user.id);
+          return isTeamLead || isMember;
+        }
+      });
     }
 
-    // Default to an empty array if no role is matched or user is null
     return [];
   };
   return (

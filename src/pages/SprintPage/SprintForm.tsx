@@ -42,6 +42,7 @@ const SprintForm = ({
         qa: 0,
       },
       status: "Incomplete",
+      description: "",
     };
     onChange({ ...sprint, task: [...sprint.task, newTask] });
   };
@@ -137,6 +138,16 @@ const SprintForm = ({
                 value={task.title}
                 onChange={(e) =>
                   handleTaskChange(index, "title", e.target.value)
+                }
+              />
+            </FormControl>
+            <FormControl mb={2}>
+              <FormLabel>Description</FormLabel>
+              <Input
+                placeholder="Enter task description"
+                value={task.description}
+                onChange={(e) =>
+                  handleTaskChange(index, "description", e.target.value)
                 }
               />
             </FormControl>

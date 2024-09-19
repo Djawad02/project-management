@@ -18,6 +18,7 @@ import AddNewProject from "../pages/AddNewProject";
 import EditMemberPage from "../pages/EditEmployeePage";
 import EditProjectPage from "../pages/EditProjectPage";
 import SpecificProjectDetailsPage from "../pages/SpecificProjectDetailsPage";
+import WorkLogs from "../pages/WorkLogs";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
             element: <EmployeeDetailPage />,
           },
           { path: "edit-project", element: <EditProjectPage /> },
+          { path: "work-logs", element: <WorkLogs /> },
           {
             path: "dashboard/specific-project",
             element: <SpecificProjectDetailsPage />,

@@ -1,5 +1,6 @@
 import { Deadline } from "./Deadline";
 import { Sprint } from "./Sprint";
+import { WorkLog } from "./WorkLog";
 
 export interface Project {
     id: number;
@@ -11,5 +12,6 @@ export interface Project {
     teamLead:number;
     deadlines?: Deadline[]; // Optional field for deadlines
     sprints?: Sprint[]; 
+    workLogs?: WorkLog[];
 }
 

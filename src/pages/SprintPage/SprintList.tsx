@@ -90,7 +90,7 @@ const SprintList = ({
               columns={sprintColumns}
               data={combinedData}
               borderColor="blue.700"
-              colorScheme="blue"
+              colorScheme="gray"
               width="100%"
             />
           ) : (

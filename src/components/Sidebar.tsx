@@ -44,6 +44,10 @@ const Sidebar = () => {
               path={`${projectBasePath}/dashboard`}
               label="Project Dashboard"
             />
+            <SidebarItem
+              path={`${projectBasePath}/work-logs`}
+              label="Work Logs"
+            />
             {(userRole === "Admin" || userRole === "TeamLead") && (
               <>
                 <SidebarItem

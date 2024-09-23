@@ -26,4 +26,4 @@ contact: {
 
 const Employee = mongoose.model('Employee', employeeSchema );
 
-exports.Employee = Employee; 
+module.exports = Employee; 

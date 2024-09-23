@@ -11,7 +11,7 @@ projectId: {
     ref: 'Project',
     required: true
 },
-memberId: {
+employeeId: {
     type: mongoose.Schema.Types.ObjectId,  
     ref: 'Employee', 
     required: true 

@@ -9,7 +9,8 @@ id: {
 projectId: {
     type: mongoose.Schema.Types.ObjectId,  // Refers to the Project collection
     ref: 'Project',
-    required: true
+    required: true,
+    unique:true
 },
 deadlineDate: {
     type: Date,
@@ -23,4 +24,4 @@ description: {
 });
 
 const Deadline = mongoose.model('Deadline',deadlineSchema);
-exports.Deadline = Deadline;
+module.exports = Deadline;

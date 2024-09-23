@@ -41,4 +41,4 @@ source: {
 
 const Project = mongoose.model('Project', projectSchema );
 
-exports.Project = Project; 
+module.exports = Project; 

@@ -1,39 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useProjects from "../hooks/useProjects";
 import { Button, HStack, Text } from "@chakra-ui/react";
 import TableComponent from "../components/TableComponent";
-import employees from "../data/employee"; // Assuming you have a projects array
 import DetailsBox from "../components/DetailsBox";
 import useProjectStore from "../store/useProjectStore";
+import projectColumns from "../data/columns/projectColumns";
+import { getEmployeeById } from "../services/EmployeeAPI";
 
 const ProjectDetailPage = () => {
   const { title } = useParams();
   const { projectList } = useProjectStore();
   const navigate = useNavigate();
 
+  const [teamLeadName, setTeamLeadName] = useState<string>("Unknown");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
   const project = projectList.find(
     (p) => p.title === decodeURIComponent(title!)
   );
+
+  useEffect(() => {
+    const fetchTeamLead = async () => {
+      try {
+        if (project?.teamLead) {
+          let teamLeadId;
+          teamLeadId = project.teamLead.id; //works fine
+
+          const employee = await getEmployeeById(teamLeadId);
+          setTeamLeadName(employee.name || "Unknown");
+        }
+      } catch (error) {
+        console.error("Error fetching team lead:", error);
+        setError("Failed to fetch team lead.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeamLead();
+  }, [project]);
 
   if (!project) {
     return <Text>Project not found</Text>;
   }
 
-  const teamLead =
-    employees.find((e) => e.id === project.teamLead)?.name || "Unknown";
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text color="red.500">{error}</Text>;
+  }
 
   const projectWithTeamLeadName = {
     ...project,
-    teamLead: teamLead, // Replace teamLead ID with the name
+    teamLead: teamLeadName,
   };
-  const projectColumns = [
-    // { header: "Project ID", accessor: "projectId" },
-    { header: "Title", accessor: "title" },
-    { header: "Description", accessor: "description" },
-    { header: "Team Lead", accessor: "teamLead" },
-    { header: "Source", accessor: "source" },
-  ];
 
   return (
     <DetailsBox title={project.title} context="projectDetails">

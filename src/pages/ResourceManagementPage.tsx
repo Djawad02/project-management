@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TableComponent from "../components/TableComponent";
-import employeeColumns from "../data/employeeColumns";
+import employeeColumns from "../data/columns/employeeColumns";
 import useProjectStore from "../store/useProjectStore";
 import { Box, Button, Text } from "@chakra-ui/react";
 

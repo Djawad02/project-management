@@ -2,7 +2,7 @@ import { HStack, Button, Text, Input, VStack } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import DetailsBox from "../components/DetailsBox";
 import TableComponent from "../components/TableComponent";
-import employeeColumns from "../data/employeeColumns";
+import employeeColumns from "../data/columns/employeeColumns";
 import { useNavigate, useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import employeeData from "../data/employee";

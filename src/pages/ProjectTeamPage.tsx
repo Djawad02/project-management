@@ -1,46 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import employees from "../data/employee";
 import { HStack, Button, Text } from "@chakra-ui/react";
 import TableComponent from "../components/TableComponent";
 import DetailsBox from "../components/DetailsBox";
-import employeeColumns from "../data/employeeColumns";
+import employeeColumns from "../data/columns/employeeColumns";
 import { Employee } from "../interfaces/Employee";
 import { AuthContext } from "../context/AuthContext";
-import { Project } from "../interfaces/Project";
 import useProjectStore from "../store/useProjectStore";
+import { getEmployees } from "../services/EmployeeAPI";
+import { Project } from "../interfaces/Project";
 
 const ProjectTeamPage = () => {
   const { title } = useParams();
   const navigate = useNavigate();
-
-  // Use Zustand's project store
-  const { projectList, employeeList } = useProjectStore();
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [project, setProject] = useState<Project | undefined>(
-    projectList.find((p) => p.title === decodeURIComponent(title!))
-  );
-
+  const { projectList } = useProjectStore();
   const { user } = React.useContext(AuthContext);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [project, setProject] = useState<Project | null>(null);
+  const [employeeList, setEmployeeList] = useState<Employee[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    const updatedProject = projectList.find(
-      (p) => p.title === decodeURIComponent(title!)
-    );
-    setProject(updatedProject);
-    // console.log("updated project", updatedProject);
-  }, [projectList, title]);
+    const fetchEmployees = async () => {
+      setLoading(true);
+      setError(null); // Reset error state
+      try {
+        if (title) {
+          const employees = await getEmployees(title);
+          setEmployeeList(employees);
+        }
+
+        const foundProject = projectList.find(
+          (p) => p.title === decodeURIComponent(title!)
+        ) as Project;
+        setProject(foundProject || null);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Failed to fetch data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEmployees();
+  }, [title]);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text color="red.500">{error}</Text>;
+  }
 
   if (!project) {
     return <Text>Project not found</Text>;
   }
-
-  const projectEmployees = employeeList.filter((e: Employee) =>
-    project.members.includes(e.id)
-  );
-
-  const filteredEmployees = projectEmployees.filter(
+  const filteredEmployees = employeeList.filter(
     (employee: Employee) =>
       employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.designation.toLowerCase().includes(searchTerm.toLowerCase())
@@ -57,16 +75,21 @@ const ProjectTeamPage = () => {
       searchTerm={searchTerm}
       onSearchTermChange={(e) => setSearchTerm(e.target.value)}
     >
-      <TableComponent
-        columns={employeeColumns}
-        data={filteredEmployees}
-        borderColor="blue.900"
-        colorScheme="gray"
-        width="100%"
-      />
+      {employeeList.length > 0 ? (
+        <TableComponent
+          columns={employeeColumns}
+          data={filteredEmployees}
+          borderColor="blue.900"
+          colorScheme="gray"
+          width="100%"
+        />
+      ) : (
+        <Text>No employees found for this project.</Text>
+      )}
+
       <HStack spacing={4} mb="4" mt="8" justifyContent="center">
         {canEditMembers && (
-          <HStack spacing={4} mb="4" mt="8" justifyContent="center">
+          <HStack spacing={4}>
             <Button
               colorScheme="blue"
               onClick={() => navigate(`/projects/${title}/add-member`)}

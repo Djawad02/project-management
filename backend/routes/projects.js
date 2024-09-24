@@ -88,17 +88,87 @@ router.delete('/:id', async (req, res) => {
   }
 });
   
-router.get('/:id', async (req, res) => {
-  try {
-    const project = await Project.findOne({ id: req.params.id })
-      .populate('members', 'id name') 
-      .populate('teamLead', 'id name'); 
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const project = await Project.findOne({ id: req.params.id })
+//       .populate('members', 'id name') 
+//       .populate('teamLead', 'id name'); 
 
-    if (!project) return res.status(404).json({ message: 'Project not found' });
-    res.json(project);
+//     if (!project) return res.status(404).json({ message: 'Project not found' });
+//     res.json(project);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
+
+router.get('/:title', async (req, res) => {
+  const { title } = req.params;
+
+  try {
+    const project = await Project.findOne({ title }).populate('members');
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+    const employees = project.members;    
+    res.json(employees);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error fetching employees:", error);
+    res.status(500).json({ message: "Error fetching employees." });
   }
 });
+
+
+router.put('/:projectId/add-member', async (req, res) => {
+  const { projectId } = req.params; // Numeric projectId
+  const { memberId } = req.body; // Numeric memberId
+  const project = await Project.findOne({ id: req.params.projectId });
+  const member = await Employee.findOne({ id: req.body.memberId });
+  if(!project) return res.status(404).json({ message: 'Project not found' });
+  if(!member) return res.status(404).json({ message: 'Employee not found' });
+
+  try {
+    
+    // Check if member already exists
+    if (!project.members.includes(member)) {
+      project.members.push(member);
+      await project.save();
+    }
+
+    res.json(project);
+  } catch (error) {
+    console.error('Error adding member:', error);
+    res.status(500).json({ message: 'Error adding member', error: error.message });
+  }
+});
+
+
+router.delete('/:projectId/remove-member', async (req, res) => {
+  const { projectId } = req.params;
+  const { memberId } = req.body;
+
+  try {
+    const project = await Project.findOne({ id: projectId });
+    if (!project) return res.status(404).json({ message: 'Project not found' });
+
+    const member = await Employee.findOne({ id: memberId });
+    if (!member) return res.status(404).json({ message: 'Employee not found' });
+
+    if (project.members.includes(member._id)) {
+      project.members = project.members.filter(id => !id.equals(member._id));
+      await project.save();
+      res.json(project);
+    } else {
+      return res.status(400).json({ message: 'Member not found in project' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error removing member', error });
+  }
+});
+
+
+
+
+
+
   
 module.exports = router; 

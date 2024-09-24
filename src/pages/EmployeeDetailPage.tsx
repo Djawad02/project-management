@@ -13,8 +13,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import employeeData from "../data/employee";
-import projectData from "../data/projects"; // Assuming project data is available
 import DetailsBox from "../components/DetailsBox";
 import employeeImage from "../assets/employeeImage.png";
 import useProjectStore from "../store/useProjectStore";
@@ -23,23 +21,26 @@ const EmployeeDetailPage = () => {
   const { projectTitle } = useParams<{ projectTitle: string }>();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState<any | null>(null);
+  const { employeeList, projectList } = useProjectStore();
 
-  // Handle search and update selectedEmployee
+  const getEmployeeProjects = (employeeId: number) => {
+    console.log("projectList", projectList);
+    const employeeProjects = projectList.filter((project) =>
+      project.members.some((member) => member.id === employeeId)
+    );
+
+    return employeeProjects;
+  };
+
   const handleEmployeeSelect = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const employeeId = parseInt(event.target.value);
-    const employee = employeeData.find((emp) => emp.id === employeeId);
+    const employee = employeeList.find((emp) => emp.id === employeeId);
     setSelectedEmployee(employee || null);
+    const employeeProjects = getEmployeeProjects(employeeId);
+    console.log("employeeProjects", employeeProjects);
   };
-  const { projectList } = useProjectStore();
-  // Fetch projects for the selected employee
-  const getEmployeeProjects = (employeeId: number) => {
-    return projectList.filter((project) =>
-      project.members.includes(employeeId)
-    );
-  };
-
   return (
     <DetailsBox showSearchBar={false} title="Employee Details">
       <Flex direction="column" align="center" justify="center" p={4} gap={4}>
@@ -48,7 +49,7 @@ const EmployeeDetailPage = () => {
           onChange={handleEmployeeSelect}
           width="300px"
         >
-          {employeeData.map((employee) => (
+          {employeeList.map((employee) => (
             <option key={employee.id} value={employee.id}>
               {employee.name}
             </option>
@@ -86,8 +87,8 @@ const EmployeeDetailPage = () => {
                   <UnorderedList spacing={2}>
                     {getEmployeeProjects(selectedEmployee.id).length > 0 ? (
                       getEmployeeProjects(selectedEmployee.id).map(
-                        (project, index) => (
-                          <ListItem key={index} fontSize="md">
+                        (project) => (
+                          <ListItem key={project.id} fontSize="md">
                             {project.title}
                           </ListItem>
                         )

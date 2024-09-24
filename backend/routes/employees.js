@@ -32,16 +32,23 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const count = await Employee.countDocuments();
+    
+    if (!req.body.name || !req.body.designation) {
+      return res.status(400).json({ message: "Employee name and designation are required." });
+    }
+    
     const newEmployee = new Employee({
       ...req.body,
-      id: count + 1
+      id: count + 1,
     });
+    
     await newEmployee.save();
     res.status(201).json(newEmployee);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
+
 
 router.put('/:id', async (req, res) => {
   try {
@@ -55,13 +62,15 @@ router.put('/:id', async (req, res) => {
   
 router.delete('/:id', async (req, res) => {
   try {
-    const employee = await Employee.findOneAndDelete({ id: req.params.id });
+    const employeeId = req.params.id; 
+    const employee = await Employee.findOneAndDelete({ id: employeeId }); 
     if (!employee) return res.status(404).json({ message: 'Employee not found' });
     res.json({ message: 'Employee deleted' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 router.get('/:id', async (req, res) => {
   try {

@@ -1,15 +1,15 @@
-// src/pages/AddNewEmployeeOrganization.tsx
 import { Box, Button, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
-import employeeData from "../data/employee";
 import DetailsBox from "../components/DetailsBox";
 import InputFields from "../components/InputFields";
+import useEmployeeStore from "../store/useEmployeeStore";
 
 const AddNewEmployeeOrganization = () => {
   const { title } = useParams();
   const { projectList } = useProjects();
+  const { AddNewEmployeeOrg } = useEmployeeStore();
   const project = projectList.find(
     (p) => p.title === decodeURIComponent(title!)
   );
@@ -20,37 +20,40 @@ const AddNewEmployeeOrganization = () => {
   const [newEmployeeName, setNewEmployeeName] = useState("");
   const [newEmployeeDesignation, setNewEmployeeDesignation] = useState("");
   const [newEmployeeContact, setNewEmployeeContact] = useState("");
+  const [loading, setLoading] = useState(false);
 
   if (!project) {
     return <Text>Project not found</Text>;
   }
 
-  const handleAddNewEmployee = () => {
+  const handleAddNewEmployee = async () => {
     if (newEmployeeName && newEmployeeDesignation) {
-      const newEmployeeId = employeeData.length
-        ? Math.max(...employeeData.map((emp) => emp.id)) + 1
-        : 1;
-      const newEmployee = {
-        id: newEmployeeId,
-        name: newEmployeeName,
-        designation: newEmployeeDesignation,
-        contact: newEmployeeContact,
-      };
+      setLoading(true);
+      try {
+        const newEmployeeData = {
+          name: newEmployeeName,
+          designation: newEmployeeDesignation,
+          contact: newEmployeeContact,
+        };
+        await AddNewEmployeeOrg(newEmployeeData, project.id);
+        setNewEmployeeName("");
+        setNewEmployeeDesignation("");
+        setNewEmployeeContact("");
 
-      employeeData.push(newEmployee);
-      alert("Employee added!");
-      setNewEmployeeName("");
-      setNewEmployeeDesignation("");
-      setNewEmployeeContact("");
-      navigate(`/projects/${title}/employee-management`);
+        navigate(`/projects/${title}/employee-management`);
+      } catch (error) {
+        console.error("Error adding new employee:", error);
+        alert("Failed to add employee.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
     <DetailsBox
       showSearchBar={false}
-      context="employeeManagement"
-      title={project.title}
+      title="Employee Management"
       searchTerm={searchTerm}
       onSearchTermChange={(e) => setSearchTerm(e.target.value)}
     >
@@ -81,7 +84,11 @@ const AddNewEmployeeOrganization = () => {
         ]}
       />
       <Box mt={3} ml={330}>
-        <Button colorScheme="blue" onClick={handleAddNewEmployee}>
+        <Button
+          colorScheme="blue"
+          onClick={handleAddNewEmployee}
+          isLoading={loading}
+        >
           Add
         </Button>
       </Box>

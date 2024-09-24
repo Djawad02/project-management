@@ -1,4 +1,3 @@
-import employees from "../data/employee";
 import { Employee } from "../interfaces/Employee";
 
 export const aggregateDesignations = (employees: Employee[]) => {

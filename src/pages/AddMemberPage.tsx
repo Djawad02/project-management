@@ -7,7 +7,7 @@ import useProjectStore from "../store/useProjectStore";
 const AddMemberPage = () => {
   const { title } = useParams();
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(true);
   const {
     projectList,
     updateProjectMembers,
@@ -23,19 +23,15 @@ const AddMemberPage = () => {
   console.log("project:", project);
   console.log("members:", project?.members);
 
-  // Assuming project.members is an array of objects containing member details
   const projectMemberIds =
     Array.from(new Set(project?.members.map((member) => member.id))) || [];
 
-  // Logging unique project member IDs
   console.log("Project Member IDs:", projectMemberIds);
 
-  // State to manage other employees
   const [otherEmployees, setOtherEmployees] = useState(
     employeeList.filter((employee) => !projectMemberIds.includes(employee.id))
   );
 
-  // Logging other employees
   console.log("Other Employees:", otherEmployees);
 
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(
@@ -55,13 +51,11 @@ const AddMemberPage = () => {
       try {
         await addMemberToProject(project.id, selectedEmployeeId);
 
-        // Update project members in the local state
         updateProjectMembers(project.id, [
           ...project.members,
-          { id: selectedEmployeeId }, // Adjust based on your member structure
+          { id: selectedEmployeeId },
         ]);
 
-        // Update otherEmployees to exclude the newly added member
         setOtherEmployees((prev) =>
           prev.filter((employee) => employee.id !== selectedEmployeeId)
         );
@@ -74,7 +68,12 @@ const AddMemberPage = () => {
   };
 
   useEffect(() => {
-    fetchEmployees(); // Fetch employee list on component mount
+    const fetchData = async () => {
+      await fetchEmployees();
+    };
+
+    fetchData();
+    setLoading(false);
   }, [fetchEmployees, projectList]);
 
   return (

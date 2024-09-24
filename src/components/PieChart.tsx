@@ -18,6 +18,7 @@ interface PieChartComponentProps {
 }
 
 const PieChartComponent = ({ data }: PieChartComponentProps) => {
+  console.log("Data passed to PieChartComponent: ", data);
   const chartData = {
     labels: Object.keys(data),
     datasets: [

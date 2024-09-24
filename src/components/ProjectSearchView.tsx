@@ -1,39 +1,52 @@
-import React, { useContext, useState } from "react";
-import { Button, Input, Box, Text, Select, HStack } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Button, Box, Text, Select, HStack, Spinner } from "@chakra-ui/react";
 import PieChartComponent from "./PieChart";
-import useProjects from "../hooks/useProjects";
-import employees from "../data/employee";
-import { aggregateDesignations } from "../chartsFunctions/DesignationRatioFunction";
+import useProjectStore from "../store/useProjectStore";
 import { aggregateProjectDesignations } from "../chartsFunctions/SpecificProjectRatioFunction";
 import { Project } from "../interfaces/Project";
-import useProjectStore from "../store/useProjectStore";
 import DetailsBox from "./DetailsBox";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
 import useUser from "../hooks/useUser";
+import { Employee } from "../interfaces/Employee";
 
 interface ProjectSearchViewProps {
   setView: React.Dispatch<React.SetStateAction<"dashboard" | "projectSearch">>;
+  employeeList: Employee[];
 }
 
-const ProjectSearchView = ({ setView }: ProjectSearchViewProps) => {
-  const { projectList, employeeList } = useProjectStore();
+const ProjectSearchView = ({
+  setView,
+  employeeList,
+}: ProjectSearchViewProps) => {
+  const { projectList, fetchProjects, fetchEmployees } = useProjectStore();
   const navigate = useNavigate();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
   const user = useUser();
+
   const userRole = user?.role;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchProjects();
+      await fetchEmployees();
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [fetchProjects, fetchEmployees]);
+
   const filterProjects = () => {
-    if (user?.role === "Admin") {
+    if (userRole === "Admin") {
       return projectList;
     }
 
-    if (user?.role === "TeamLead" || user?.role === "Employee") {
+    if (userRole === "TeamLead" || userRole === "Employee") {
       return projectList.filter((project) =>
-        user.assignedProjects?.includes(project.id)
+        user?.assignedProjects?.includes(project.id)
       );
     }
 
-    // Default to an empty array if no role is matched or user is null
     return [];
   };
 
@@ -50,14 +63,18 @@ const ProjectSearchView = ({ setView }: ProjectSearchViewProps) => {
   };
 
   const handleSpecificProjectDetails = () => {
-    if (selectedProject)
+    if (selectedProject) {
       navigate(
         `/projects/${encodeURIComponent(
           selectedProject.title
         )}/dashboard/specific-project`
       );
-    else alert("Please select a project");
+    } else {
+      alert("Please select a project");
+    }
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <DetailsBox
@@ -89,7 +106,7 @@ const ProjectSearchView = ({ setView }: ProjectSearchViewProps) => {
             {selectedProject.title} Designation Ratio
           </Text>
           <PieChartComponent
-            data={aggregateProjectDesignations(employees, selectedProject)}
+            data={aggregateProjectDesignations(employeeList, selectedProject)}
           />
         </Box>
       )}

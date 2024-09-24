@@ -1,41 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableComponent from "../components/TableComponent";
 import employeeColumns from "../data/columns/employeeColumns";
 import useProjectStore from "../store/useProjectStore";
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Text, Spinner } from "@chakra-ui/react";
 
 const ResourceManagementPage = () => {
   const [view, setView] = useState<"assigned" | "free">("assigned");
+  const { projectList, employeeList, fetchEmployees, fetchProjects } =
+    useProjectStore();
+  const [loading, setLoading] = useState(true);
 
-  // Access projects and employees from Zustand store
-  const { projectList, employeeList } = useProjectStore();
-
-  // Function to get employees assigned to a project with project names
   const getAssignedEmployeesWithProjects = () => {
     return employeeList
       .map((employee) => {
         const employeeProjects = projectList
-          .filter((project) => project.members.includes(employee.id))
+          .filter((project) =>
+            project.members.some((member) => member.id === employee.id)
+          )
           .map((project) => project.title);
 
-        return {
-          ...employee,
-          projects:
-            employeeProjects.length > 0 ? employeeProjects.join(", ") : "None",
-        };
+        if (employeeProjects.length > 0) {
+          return {
+            ...employee,
+            projects: employeeProjects.join(", "),
+          };
+        }
+        return null;
       })
-      .filter((employee) => employee.projects !== "None");
+      .filter((employee) => employee !== null);
   };
 
-  // Function to get employees not assigned to any project
   const getFreeEmployees = () => {
     const assignedEmployeeIds = new Set(
-      projectList.flatMap((project) => project.members)
+      projectList.flatMap((project) =>
+        project.members.map((member) => member.id)
+      )
     );
+
     return employeeList.filter(
       (employee) => !assignedEmployeeIds.has(employee.id)
     );
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        await fetchEmployees();
+        await fetchProjects();
+        console.log("Fetched Employees:", employeeList);
+        console.log("Fetched Projects:", projectList);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [fetchEmployees, fetchProjects]);
+  projectList.forEach((project) => {
+    console.log(`Project: ${project.title}, Members:`, project.members);
+  });
 
   const assignedEmployees = getAssignedEmployeesWithProjects();
   const freeEmployees = getFreeEmployees();
@@ -59,7 +84,17 @@ const ResourceManagementPage = () => {
         </Button>
       </Box>
 
-      {view === "assigned" ? (
+      {loading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="200px"
+        >
+          <Spinner size="xl" />
+          <Text ml={4}>Loading...</Text>
+        </Box>
+      ) : view === "assigned" ? (
         <Box>
           <Text fontSize="xl" mb="4">
             Employees Assigned to Projects
@@ -67,7 +102,7 @@ const ResourceManagementPage = () => {
           <TableComponent
             columns={[
               ...employeeColumns,
-              { header: "Projects", accessor: "projects" }, // Adding 'projects' column dynamically
+              { header: "Projects", accessor: "projects" },
             ]}
             data={assignedEmployees}
             borderColor="blue.900"
@@ -81,7 +116,7 @@ const ResourceManagementPage = () => {
             Employees Not Assigned to Any Project
           </Text>
           <TableComponent
-            columns={employeeColumns} // Assuming columns do not need modification for free employees
+            columns={employeeColumns}
             data={freeEmployees}
             borderColor="blue.900"
             colorScheme="gray"
